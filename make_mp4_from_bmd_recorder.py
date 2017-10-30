@@ -42,6 +42,10 @@ _src_end_timestamp_input=input()
 if len(_src_end_timestamp_input) == 0:
     pass
     _src_end_timestamp_input = None
+    _duration = '999999999'
+    _dst_video_file_name = '%s_%s_to_end'% (_src_video_file_name,
+        _src_start_timestamp_input.replace(':','_'))
+    _dst_video_file = '%s\\%s' % (_src_video_path,_dst_video_file_name)
 else:
     _ss_list = _src_start_timestamp_input.split(':')
     _to_list = _src_end_timestamp_input.split(':')
@@ -56,6 +60,16 @@ else:
         _src_start_timestamp_input.replace(':','_'),
         _src_end_timestamp_input.replace(':','_'))
     _dst_video_file = '%s\\%s' % (_src_video_path,_dst_video_file_name)
+
+print(['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
+    '-i','%s' % _src_video_name_input,
+    '-c:v','%s' % _src_codec_video_input,
+    '-b:v','%s' % _bitrate,
+    '-t','%s' % _duration,
+    '-pix_fmt','yuv420p',
+    '%s.mp4' % _dst_video_file])
+
+print()
 
 subprocess.call(['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
     '-i','%s' % _src_video_name_input,
