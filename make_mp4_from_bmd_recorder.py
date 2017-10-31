@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Oct30,2017
+last update on Oct31,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -12,6 +12,7 @@ import os
 import subprocess
 import datetime
 
+print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等')
 print('请输入录像文件路径 :' )
 _src_video_name_input=input()
 _src_video_file_name = _src_video_name_input.rsplit('\\',1)[1]
@@ -64,6 +65,9 @@ else:
 print(['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
     '-i','%s' % _src_video_name_input,
     '-c:v','%s' % _src_codec_video_input,
+    '-map','0:1',
+    '-ac','2',
+    '-map','0:2',
     '-b:v','%s' % _bitrate,
     '-t','%s' % _duration,
     '-pix_fmt','yuv420p',
@@ -74,6 +78,9 @@ print()
 subprocess.call(['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
     '-i','%s' % _src_video_name_input,
     '-c:v','%s' % _src_codec_video_input,
+    '-map','0:1',
+    '-ac','2',
+    '-map','0:2',
     '-b:v','%s' % _bitrate,
     '-t','%s' % _duration,
     '-pix_fmt','yuv420p',
