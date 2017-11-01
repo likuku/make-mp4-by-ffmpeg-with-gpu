@@ -14,7 +14,8 @@ import datetime
 
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等\n')
 print('请输入素材文件路径 :' )
-_src_video_name_input=input()
+_src_video_name_input=input().replace('"','')
+# 路径里包含空格，则拖拽文件时，windows 会自动给首尾加一对双引号，subprocess 不需要 
 _src_video_file_name = _src_video_name_input.rsplit('\\',1)[1]
 _src_video_path = _src_video_name_input.rsplit('\\',1)[0]
 _check_file_name = lambda _x : (_x.rsplit('.',1)[0].count('Capture') +
