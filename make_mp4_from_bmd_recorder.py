@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Oct31,2017
+last update on Nov1,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -12,11 +12,14 @@ import os
 import subprocess
 import datetime
 
-print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等')
-print('请输入录像文件路径 :' )
+print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等\n')
+print('请输入素材文件路径 :' )
 _src_video_name_input=input()
 _src_video_file_name = _src_video_name_input.rsplit('\\',1)[1]
 _src_video_path = _src_video_name_input.rsplit('\\',1)[0]
+_check_file_name = lambda _x : (_x.rsplit('.',1)[0].count('Capture') +
+                                _x.rsplit('.',1)[1].count('mov')) == 2
+_src_video_made_by_bmd = _check_file_name(_src_video_file_name)
 
 print('请输入视频编码器 H264:h264_nvenc,libx264 H265/HEVC:hevc_nvenc,libx265 默认 h264_nvenc:')
 _src_codec_video_input=input()
@@ -62,26 +65,36 @@ else:
         _src_end_timestamp_input.replace(':','_'))
     _dst_video_file = '%s\\%s' % (_src_video_path,_dst_video_file_name)
 
-print(['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
-    '-i','%s' % _src_video_name_input,
-    '-c:v','%s' % _src_codec_video_input,
-    '-map','0:1',
-    '-ac','2',
-    '-map','0:2',
-    '-b:v','%s' % _bitrate,
-    '-t','%s' % _duration,
-    '-pix_fmt','yuv420p',
-    '%s.mp4' % _dst_video_file])
+def make_cmd_array_for_bmd_recorder():
+    pass
+    _cmd_array = ['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
+        '-i','%s' % _src_video_name_input,
+        '-c:v','%s' % _src_codec_video_input,
+        '-map','0:1',
+        '-ac','2',
+        '-map','0:2',
+        '-b:v','%s' % _bitrate,
+        '-t','%s' % _duration,
+        '-pix_fmt','yuv420p',
+        '%s.mp4' % _dst_video_file]
+    return(_cmd_array)
 
-print()
+def make_cmd_array_for_other():
+    pass
+    _cmd_array = ['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
+        '-i','%s' % _src_video_name_input,
+        '-c:v','%s' % _src_codec_video_input,
+        '-b:v','%s' % _bitrate,
+        '-t','%s' % _duration,
+        '-pix_fmt','yuv420p',
+        '%s.mp4' % _dst_video_file]
+    return(_cmd_array)
 
-subprocess.call(['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
-    '-i','%s' % _src_video_name_input,
-    '-c:v','%s' % _src_codec_video_input,
-    '-map','0:1',
-    '-ac','2',
-    '-map','0:2',
-    '-b:v','%s' % _bitrate,
-    '-t','%s' % _duration,
-    '-pix_fmt','yuv420p',
-    '%s.mp4' % _dst_video_file])
+if _src_video_made_by_bmd:
+    pass
+    _cmd = make_cmd_array_for_bmd_recorder()
+else:
+    _cmd = make_cmd_array_for_other()
+
+print(_cmd)
+subprocess.call(_cmd)
