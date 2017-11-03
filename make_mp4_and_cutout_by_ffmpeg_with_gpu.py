@@ -12,6 +12,7 @@ import os
 import subprocess
 import datetime
 
+print('版本: v1.1 20171103')
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等\n')
 print('请输入素材文件路径 :' )
 _src_video_name_input=input().replace('"','')
