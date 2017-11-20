@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Nov9,2017
+last update on Nov21,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -38,11 +38,32 @@ else:
     time.sleep(2)
     exit()
 
-print('请输入视频编码器 H264:h264_nvenc,libx264 H265/HEVC:hevc_nvenc,libx265 默认 h264_nvenc:')
-_src_codec_video_input=input()
-if len(_src_codec_video_input) == 0:
+_dict_codec_video={'0':'h264_nvenc','1':'libx264',
+                   '2':'hevc_nvenc','3','libx265',
+                   '4','copy'}
+
+print('视频编码器列表:')
+for _i in _dict_codec_video.keys():
     pass
-    _src_codec_video_input = 'h264_nvenc'
+    if _dict_codec_video[_i] == 'h264_nvenc':
+        pass
+        print(' %s. %s [默认]') % (_i,_dict_codec_video[_i])
+    else:
+        print(' %s. %s') % (_i,_dict_codec_video[_i])
+print('请输入视频编码器 序号:')
+_src_codec_video_input=input()
+
+try:
+    pass
+    if len(_src_codec_video_input) == 0:
+        pass
+        _codec_video = _dict_codec_video['0']
+    else:
+        _codec_video = _dict_codec_video[_src_codec_video_input]
+except Exception as e:
+        print ('Error: 再次运行后,重新输入正确的选项代号')
+        time.sleep(2)
+        exit()
 
 print('请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec :')
 _src_bitrate_input=input()
@@ -86,7 +107,7 @@ def make_cmd_array_for_bmd_recorder():
     pass
     _cmd_array = ['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
         '-i','%s' % _src_video_name_input,
-        '-c:v','%s' % _src_codec_video_input,
+        '-c:v','%s' % _codec_video,
         '-map','0:1',
         '-ac','2',
         '-map','0:2',
@@ -99,7 +120,7 @@ def make_cmd_array_for_other():
     pass
     _cmd_array = ['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
         '-i','%s' % _src_video_name_input,
-        '-c:v','%s' % _src_codec_video_input,
+        '-c:v','%s' % _codec_video,
         '-b:v','%s' % _bitrate,
         '-t','%s' % _duration,
         '-pix_fmt','yuv420p']
