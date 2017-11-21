@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Nov21,2017
+last update on Nov22,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -38,19 +38,17 @@ else:
     time.sleep(2)
     exit()
 
-_dict_codec_video={'0':'h264_nvenc','1':'libx264',
-                   '2':'hevc_nvenc','3':'libx265',
-                   '4':'copy'}
+_dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
+                   '1':['libx264','H.264 with CPU'],
+                   '2':['hevc_nvenc','H.265 with Nvidia GPU'],
+                   '3':['libx265','H.265 with CPU'],
+                   '4':['h264_videotoolbox','H.265 with GPU on macOS'],
+                   '5':['copy','Copy data from Source,the Fastest']}
 
 print('视频编码器列表:')
 for _i in _dict_codec_video.keys():
-    pass
-    if _dict_codec_video[_i] == 'h264_nvenc':
-        pass
-        print(' %s. %s [默认]' % (_i,_dict_codec_video[_i]))
-    else:
-        print(' %s. %s' % (_i,_dict_codec_video[_i]))
-print('请输入视频编码器 [ nvenc 即 Nvdia GPU 加速 ] 序号:')
+    print(' %s. %s: %s' % (_i,_dict_codec_video[_i][0],_dict_codec_video[_i][1]))
+print('请输入视频编码器 序号(直接回车即[默认]):')
 _src_codec_video_input=input()
 
 try:
@@ -59,7 +57,7 @@ try:
         pass
         _codec_video = _dict_codec_video['0']
     else:
-        _codec_video = _dict_codec_video[_src_codec_video_input]
+        _codec_video = _dict_codec_video[_src_codec_video_input][0]
 except Exception as e:
         print ('Error: 再次运行后,重新输入正确的选项代号')
         time.sleep(2)
