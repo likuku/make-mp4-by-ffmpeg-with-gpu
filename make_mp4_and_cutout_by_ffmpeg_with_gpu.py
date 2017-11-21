@@ -50,7 +50,7 @@ for _i in _dict_codec_video.keys():
         print(' %s. %s [默认]' % (_i,_dict_codec_video[_i]))
     else:
         print(' %s. %s' % (_i,_dict_codec_video[_i]))
-print('请输入视频编码器 序号:')
+print('请输入视频编码器 [ nvenc 即 Nvdia GPU 加速 ] 序号:')
 _src_codec_video_input=input()
 
 try:
