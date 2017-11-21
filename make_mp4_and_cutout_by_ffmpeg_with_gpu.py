@@ -39,17 +39,17 @@ else:
     exit()
 
 _dict_codec_video={'0':'h264_nvenc','1':'libx264',
-                   '2':'hevc_nvenc','3','libx265',
-                   '4','copy'}
+                   '2':'hevc_nvenc','3':'libx265',
+                   '4':'copy'}
 
 print('视频编码器列表:')
 for _i in _dict_codec_video.keys():
     pass
     if _dict_codec_video[_i] == 'h264_nvenc':
         pass
-        print(' %s. %s [默认]') % (_i,_dict_codec_video[_i])
+        print(' %s. %s [默认]' % (_i,_dict_codec_video[_i]))
     else:
-        print(' %s. %s') % (_i,_dict_codec_video[_i])
+        print(' %s. %s' % (_i,_dict_codec_video[_i]))
 print('请输入视频编码器 序号:')
 _src_codec_video_input=input()
 
