@@ -59,7 +59,7 @@ _dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
 print('视频编码器列表:')
 for _i in _dict_codec_video.keys():
     print(' %s. %s: %s' % (_i,_dict_codec_video[_i][0],_dict_codec_video[_i][1]))
-print('请输入视频编码器 序号(直接回车即[默认]):')
+print('请输入视频编码器 序号(直接回车即选 0):')
 _src_codec_video_input=input()
 
 try:
@@ -74,13 +74,17 @@ except Exception as e:
         time.sleep(2)
         exit()
 
-print('请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec :')
-_src_bitrate_input=input()
-if len(_src_bitrate_input) == 0:
+if _codec_video == 'copy':
     pass
-    _bitrate = '100M'
+    print('已选择纯剪切不编码的 copy 模式:')
 else:
-    _bitrate = '%sM' % _src_bitrate_input
+    print('请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec :')
+    _src_bitrate_input=input()
+    if len(_src_bitrate_input) == 0:
+        pass
+        _bitrate = '100M'
+    else:
+        _bitrate = '%sM' % _src_bitrate_input
 
 print('请输入选择的视频片段开始时刻，时间戳格式 HH:mm:ss ,默认 00:00:00 :')
 _src_start_timestamp_input=input()
@@ -130,6 +134,15 @@ def make_cmd_array_for_bmd_recorder():
         '-pix_fmt','yuv420p']
     return(_cmd_array)
 
+def make_cmd_array_for_copy():
+    pass
+    _cmd_array = ['%s' % _ffmpeg_name,
+        '-ss','%s' % _src_start_timestamp_input,
+        '-i','%s' % _src_video_name_input,
+        '-c','%s' % _codec_video,
+        '-t','%s' % _duration]
+    return(_cmd_array)
+
 def make_cmd_array_for_other():
     pass
     _cmd_array = ['%s' % _ffmpeg_name,
@@ -141,15 +154,20 @@ def make_cmd_array_for_other():
         '-pix_fmt','yuv420p']
     return(_cmd_array)
 
-if _src_video_made_by_bmd:
+if _codec_video == 'copy':
+    pass
+    _cmd = make_cmd_array_for_copy()
+    _cmd = _cmd + ['%s.%s' % (_dst_video_file,
+                   (_src_video_file_name.rsplit('.',1)[1]))]
+elif _src_video_made_by_bmd:
     pass
     _cmd = make_cmd_array_for_bmd_recorder()
 else:
     _cmd = make_cmd_array_for_other()
-if _src_codec_video_deinterlace_input:
+if _src_codec_video_deinterlace_input and (_codec_video != 'copy'):
     pass
     _cmd = _cmd + ['-vf','yadif=1'] + ['%s.mp4' % _dst_video_file]
-else:
+elif _codec_video != 'copy':
     _cmd = _cmd + ['%s.mp4' % _dst_video_file]
 
 print(_cmd)
