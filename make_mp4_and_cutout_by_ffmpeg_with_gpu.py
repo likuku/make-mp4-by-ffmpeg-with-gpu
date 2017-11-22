@@ -16,7 +16,7 @@ import platform
 
 _str_os_type = platform.system()
 
-print('版本: v1.3.1 20171122')
+print('版本: v1.3.2 20171122')
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等\n')
 print('请输入素材文件路径 :' )
 _src_video_name_input=input().replace('"','').strip()
