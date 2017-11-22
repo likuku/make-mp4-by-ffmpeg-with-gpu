@@ -66,7 +66,7 @@ try:
     pass
     if len(_src_codec_video_input) == 0:
         pass
-        _codec_video = _dict_codec_video['0']
+        _codec_video = _dict_codec_video['0'][0]
     else:
         _codec_video = _dict_codec_video[_src_codec_video_input][0]
 except Exception as e:
@@ -140,8 +140,6 @@ def make_cmd_array_for_other():
         '-t','%s' % _duration,
         '-pix_fmt','yuv420p']
     return(_cmd_array)
-
-print ('_src_codec_video_deinterlace_input:',_src_codec_video_deinterlace_input)
 
 if _src_video_made_by_bmd:
     pass
