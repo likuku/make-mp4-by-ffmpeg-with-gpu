@@ -112,7 +112,9 @@ else:
     _dst_video_file_name = '%s_%s_to_%s'% (_src_video_file_name,
         _src_start_timestamp_input.replace(':','_'),
         _src_end_timestamp_input.replace(':','_'))
-    _dst_video_file = '%s\\%s' % (_src_video_path,_dst_video_file_name)
+    _dst_video_file = '%s%s%s' % (_src_video_path,
+                                  _path_split_by,
+                                  _dst_video_file_name)
 
 def make_cmd_array_for_bmd_recorder():
     pass
