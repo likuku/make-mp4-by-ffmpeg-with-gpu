@@ -12,14 +12,25 @@ import os
 import subprocess
 import datetime
 import time
+import platform
+
+_str_os_type = platform.system()
 
 print('版本: v1.2.4 20171122')
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等\n')
 print('请输入素材文件路径 :' )
-_src_video_name_input=input().replace('"','')
+_src_video_name_input=input().replace('"','').strip()
 # 路径里包含空格，则拖拽文件时，windows 会自动给首尾加一对双引号，subprocess 不需要
-_src_video_file_name = _src_video_name_input.rsplit('\\',1)[1]
-_src_video_path = _src_video_name_input.rsplit('\\',1)[0]
+if _str_os_type == 'Windows':
+    pass
+    _path_split_by = '\\'
+    _ffmpeg_name = 'ffmpeg.exe'
+else:
+    _path_split_by = '/'
+    _ffmpeg_name = 'ffmpeg'
+_src_video_name_input_list = _src_video_name_input.rsplit(_path_split_by,1)
+_src_video_file_name = _src_video_name_input_list[1]
+_src_video_path = _src_video_name_input_list[0]
 _check_file_name = lambda _x : (_x.rsplit('.',1)[0].count('Capture') +
                                 _x.rsplit('.',1)[1].count('mov')) == 2
 _src_video_made_by_bmd = _check_file_name(_src_video_file_name)
@@ -86,7 +97,9 @@ if len(_src_end_timestamp_input) == 0:
     _duration = '999999999'
     _dst_video_file_name = '%s_%s_to_end'% (_src_video_file_name,
         _src_start_timestamp_input.replace(':','_'))
-    _dst_video_file = '%s\\%s' % (_src_video_path,_dst_video_file_name)
+    _dst_video_file = '%s%s%s' % (_src_video_path,
+                                  _path_split_by,
+                                  _dst_video_file_name)
 else:
     _ss_list = _src_start_timestamp_input.split(':')
     _to_list = _src_end_timestamp_input.split(':')
@@ -104,7 +117,8 @@ else:
 
 def make_cmd_array_for_bmd_recorder():
     pass
-    _cmd_array = ['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
+    _cmd_array = ['%s' % _ffmpeg_name,
+        '-ss','%s' % _src_start_timestamp_input,
         '-i','%s' % _src_video_name_input,
         '-c:v','%s' % _codec_video,
         '-map','0:0',
@@ -117,7 +131,8 @@ def make_cmd_array_for_bmd_recorder():
 
 def make_cmd_array_for_other():
     pass
-    _cmd_array = ['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
+    _cmd_array = ['%s' % _ffmpeg_name,
+        '-ss','%s' % _src_start_timestamp_input,
         '-i','%s' % _src_video_name_input,
         '-c:v','%s' % _codec_video,
         '-b:v','%s' % _bitrate,
