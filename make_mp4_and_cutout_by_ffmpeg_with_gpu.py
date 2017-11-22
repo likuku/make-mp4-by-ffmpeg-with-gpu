@@ -106,9 +106,9 @@ def make_cmd_array_for_bmd_recorder():
     _cmd_array = ['ffmpeg.exe','-ss','%s' % _src_start_timestamp_input,
         '-i','%s' % _src_video_name_input,
         '-c:v','%s' % _codec_video,
-        '-map','0:1',
+        '-map','0:0',
         '-ac','2',
-        '-map','0:2',
+        '-map','0:1',
         '-b:v','%s' % _bitrate,
         '-t','%s' % _duration,
         '-pix_fmt','yuv420p']
