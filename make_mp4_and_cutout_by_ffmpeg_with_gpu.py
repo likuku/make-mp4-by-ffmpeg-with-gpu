@@ -222,6 +222,19 @@ def main():
         subprocess.call(_cmd)
     else:
         pass
+        with open(str_cut_list_file_name, 'r') as _raw_cut_list_file:
+            for _line in _raw_cut_list_file.readlines():
+                _list_line = _line.strip().split(',')
+                str_start_timestamp = _list_line[0]
+                str_end_stimestamp = _list_line[1]
+                str_duration = make_str_duration(str_start_timestamp,
+                                                 str_end_stimestamp)
+                str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
+                                                             str_end_stimestamp)
+                _cmd = make_str_cmd(str_start_timestamp,str_duration,str_dst_video_file)
+                print(_cmd)
+                continue
+                subprocess.call(_cmd)
 
 
 if __name__ == '__main__':
