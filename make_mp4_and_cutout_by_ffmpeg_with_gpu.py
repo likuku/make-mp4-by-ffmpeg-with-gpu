@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Nov22,2017
+last update on Nov23,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
