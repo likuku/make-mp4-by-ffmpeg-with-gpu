@@ -23,7 +23,7 @@ else:
     path_split_by = '/'
     ffmpeg_name = 'ffmpeg'
 
-print('版本: v1.3.2 20171122')
+print('版本: v1.3.3 20171123')
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等\n')
 print('请输入素材文件路径 :' )
 src_video_name_input=input().replace('"','').strip()
@@ -218,7 +218,7 @@ def main():
                                                      str_end_stimestamp)
         _cmd = make_str_cmd(str_start_timestamp,str_duration,str_dst_video_file)
         print(_cmd)
-        exit()
+        #exit()
         subprocess.call(_cmd)
     else:
         pass
