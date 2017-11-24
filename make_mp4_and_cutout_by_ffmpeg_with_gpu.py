@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Nov23,2017
+last update on Nov24,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -157,9 +157,9 @@ def make_cmd_array_for_bmd_recorder(_start_timestamp,_duration):
         '-ss','%s' % _start_timestamp,
         '-i','%s' % src_video_name_input,
         '-c:v','%s' % str_codec_video,
-        '-map','0:0',
+        '-map','0:v',
         '-ac','2',
-        '-map','0:1',
+        '-map','0:a',
         '-b:v','%s' % str_bitrate,
         '-t','%s' % _duration,
         '-pix_fmt','yuv420p']
@@ -230,7 +230,8 @@ def main():
                                                  str_end_stimestamp)
                 str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
                                                              str_end_stimestamp)
-                _cmd = make_str_cmd(str_start_timestamp,str_duration,str_dst_video_file)
+                _cmd = make_str_cmd(str_start_timestamp,str_duration,
+                                    str_dst_video_file)
                 print(_cmd)
                 continue
                 subprocess.call(_cmd)
