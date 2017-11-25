@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Nov24,2017
+last update on Nov25,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -30,9 +30,6 @@ src_video_name_input=input().replace('"','').strip()
 src_video_name_input_list = src_video_name_input.rsplit(path_split_by,1)
 src_video_file_name = src_video_name_input_list[1]
 src_video_path = src_video_name_input_list[0]
-_check_file_name = lambda _x : (_x.rsplit('.',1)[0].count('Capture') +
-                                _x.rsplit('.',1)[1].count('mov')) == 2
-src_video_made_by_bmd = _check_file_name(src_video_file_name)
 
 print('\n反交错滤镜 -fv yadif=1，消除隔行扫描/如1080i素材画面的锯齿/百叶窗条纹')
 print('是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]:')
@@ -151,20 +148,6 @@ def make_str_dst_video_file(_start_timestamp,_end_stimestamp):
                                   _dst_video_file_name)
     return(_dst_video_file)
 
-def make_cmd_array_for_bmd_recorder(_start_timestamp,_duration):
-    pass
-    _cmd_array = ['%s' % ffmpeg_name,
-        '-ss','%s' % _start_timestamp,
-        '-i','%s' % src_video_name_input,
-        '-c:v','%s' % str_codec_video,
-        '-map','0:v',
-        '-ac','2',
-        '-map','0:a',
-        '-b:v','%s' % str_bitrate,
-        '-t','%s' % _duration,
-        '-pix_fmt','yuv420p']
-    return(_cmd_array)
-
 def make_cmd_array_for_copy(_start_timestamp,_duration):
     pass
     _cmd_array = ['%s' % ffmpeg_name,
@@ -180,6 +163,9 @@ def make_cmd_array_for_other(_start_timestamp,_duration):
         '-ss','%s' % _start_timestamp,
         '-i','%s' % src_video_name_input,
         '-c:v','%s' % str_codec_video,
+        '-map','0:v',
+        '-ac','2',
+        '-map','0:a',
         '-b:v','%s' % str_bitrate,
         '-t','%s' % _duration,
         '-pix_fmt','yuv420p']
@@ -192,9 +178,6 @@ def make_str_cmd(_start_timestamp,_duration,_dst_video_file):
         _cmd = make_cmd_array_for_copy(_start_timestamp,_duration)
         _cmd = _cmd + ['%s.%s' % (_dst_video_file,
                        (src_video_file_name.rsplit('.',1)[1]))]
-    elif src_video_made_by_bmd:
-        pass
-        _cmd = make_cmd_array_for_bmd_recorder(_start_timestamp,_duration)
     else:
         _cmd = make_cmd_array_for_other(_start_timestamp,_duration)
     if src_codec_video_deinterlace_input and (str_codec_video != 'copy'):
