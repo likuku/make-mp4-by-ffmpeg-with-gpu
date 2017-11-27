@@ -25,7 +25,7 @@ else:
 
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等\n')
 print('请输入素材文件路径 :' )
-src_video_name_input=input().replace('"','').strip()
+src_video_name_input = input().replace('"','').strip()
 # 路径里包含空格，则拖拽文件时，windows 会自动给首尾加一对双引号，subprocess 不需要
 src_video_name_input_list = src_video_name_input.rsplit(path_split_by,1)
 src_video_file_name = src_video_name_input_list[1]
@@ -33,7 +33,7 @@ src_video_path = src_video_name_input_list[0]
 
 print('\n反交错滤镜 -fv yadif=1，消除隔行扫描/如1080i素材画面的锯齿/百叶窗条纹')
 print('是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]:')
-src_codec_video_deinterlace_input=input()
+src_codec_video_deinterlace_input = input()
 if len(src_codec_video_deinterlace_input) == 0:
     pass
     src_codec_video_deinterlace_input = False
@@ -57,7 +57,7 @@ print('视频编码器列表:')
 for _i in _dict_codec_video.keys():
     print(' %s. %s: %s' % (_i,_dict_codec_video[_i][0],_dict_codec_video[_i][1]))
 print('请输入视频编码器 序号(直接回车即选 0):')
-_src_codec_video_input=input()
+_src_codec_video_input = input()
 
 try:
     pass
@@ -76,7 +76,7 @@ if str_codec_video == 'copy':
     print('已选择纯剪切不编码的 copy 模式:')
 else:
     print('请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec :')
-    _src_bitrate_input=input()
+    _src_bitrate_input = input()
     if len(_src_bitrate_input) == 0:
         pass
         str_bitrate = '100M'
@@ -93,16 +93,16 @@ def get_str_cut_list_file_name_from_keyboard():
           也可用 Excel，Numbers，等表格软件制作，删除所有空白单元格后导出 .csv 文件
           ''')
     print('请输入切片列表文件路径(不明白这是什么，请直接回车忽略) :' )
-    _src_cut_list_input=input().replace('"','').strip()
+    _src_cut_list_input = input().replace('"','').strip()
     if len(_src_cut_list_input) == 0:
         _src_cut_list_input = None
     return(_src_cut_list_input)
 
-def get_str_make_2d_l_from_top_from_keyboard():
+def get_bool_make_2d_l_from_top_from_keyboard():
     pass
     print('是否从 上下(TB)3D 立体画面里抽取 上T(左眼) 并拉伸形成素材源尺寸单一2D画面:')
     print(' 1[是]? 0[否]? 直接回车则默认为 0[否]:')
-    _str_input=input()
+    _str_input = input()
     _dict_make2dl_from_top = {'0':False,'1':True}
     try:
         pass
@@ -139,7 +139,7 @@ def get_bool_double_action_for_3d_2d_from_keyboard():
 def get_str_start_timestamp_from_keyboard():
     pass
     print('请输入选择的视频片段开始时刻，时间戳格式 HH:mm:ss ,默认 00:00:00 :')
-    _src_start_timestamp_input=input()
+    _src_start_timestamp_input = input()
     if len(_src_start_timestamp_input) == 0:
         pass
         _src_start_timestamp_input = '00:00:00'
@@ -148,7 +148,7 @@ def get_str_start_timestamp_from_keyboard():
 def get_str_end_timestamp_from_keyboard():
     pass
     print('请输入选择的视频片段结束时刻，时间戳格式 HH:mm:ss ,默认 源视频结尾 :')
-    _src_end_timestamp_input=input()
+    _src_end_timestamp_input = input()
     if len(_src_end_timestamp_input) == 0:
         pass
         _src_end_timestamp_input = None
@@ -242,7 +242,7 @@ def make_list_for_cmd_array(_start_timestamp,_duration,_dst_video_file):
         _list_for_cmd_array.append(_cmd_array)
     else:
         _cmd_array = make_cmd_array_for_other(_start_timestamp,_duration)
-        _str_make_2d_l_from_top = get_str_make_2d_l_from_top_from_keyboard()
+        _str_make_2d_l_from_top = get_bool_make_2d_l_from_top_from_keyboard()
         _array_vf = make_array_vf(src_codec_video_deinterlace_input,
                               _str_make_2d_l_from_top)
         if _str_make_2d_l_from_top:
