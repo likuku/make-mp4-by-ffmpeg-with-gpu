@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Nov25,2017
+last update on Nov27,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -98,6 +98,25 @@ def get_str_cut_list_file_name_from_keyboard():
         _src_cut_list_input = None
     return(_src_cut_list_input)
 
+def get_str_make_2d_l_from_top_from_keyboard():
+    pass
+    print('是否从 上下(TB)3D 立体画面里抽取 上T(左眼) 并拉伸形成素材源尺寸单一2D画面:')
+    print(' 1[是]? 0[否]? 直接回车则默认为 0[否]:')
+    _str_input=input()
+    _dict_make2dl_from_top = {'0':False,'1':True}
+    try:
+        pass
+        if len(_str_input) == 0:
+            pass
+            _str_make_2d_l_from_top = False
+        else:
+            _str_make_2d_l_from_top = _dict_make2dl_from_top[_str_input]
+            return(_str_make_2d_l_from_top)
+    except Exception as e:
+            print ('Error: 再次运行后,重新输入正确的选项代号')
+            time.sleep(2)
+            exit()
+
 def get_str_start_timestamp_from_keyboard():
     pass
     print('请输入选择的视频片段开始时刻，时间戳格式 HH:mm:ss ,默认 00:00:00 :')
@@ -148,6 +167,30 @@ def make_str_dst_video_file(_start_timestamp,_end_stimestamp):
                                   _dst_video_file_name)
     return(_dst_video_file)
 
+def make_array_vf(src_codec_video_deinterlace_input,
+                str_make_2d_l_from_top,):
+    pass
+    _array = []
+    if src_codec_video_deinterlace_input:
+        pass
+        _array.append('yadif=1')
+    else:
+        pass
+    if str_make_2d_l_from_top:
+        _array.append('crop=iw:(ih/2):0:0,scale=iw:(ih*2)')
+    else:
+        pass
+    if len(_array) == 0:
+        pass
+        _array_vf = None
+    elif len(_array) == 1:
+        _array_vf = ['-vf','\"%s\"' % (_array[0])]
+    elif len(_array) == 2:
+        _array_vf = ['-vf','\"%s,%s\"' % (_array[0],_array[1])]
+    else:
+        pass
+    return(_array_vf)
+
 def make_cmd_array_for_copy(_start_timestamp,_duration):
     pass
     _cmd_array = ['%s' % ffmpeg_name,
@@ -180,11 +223,17 @@ def make_str_cmd(_start_timestamp,_duration,_dst_video_file):
                        (src_video_file_name.rsplit('.',1)[1]))]
     else:
         _cmd = make_cmd_array_for_other(_start_timestamp,_duration)
-    if src_codec_video_deinterlace_input and (str_codec_video != 'copy'):
-        pass
-        _cmd = _cmd + ['-vf','yadif=1'] + ['%s.mp4' % _dst_video_file]
-    elif str_codec_video != 'copy':
-        _cmd = _cmd + ['%s.mp4' % _dst_video_file]
+        _str_make_2d_l_from_top = get_str_make_2d_l_from_top_from_keyboard()
+        _array_vf = make_array_vf(src_codec_video_deinterlace_input,
+                              _str_make_2d_l_from_top)
+        if _str_make_2d_l_from_top:
+            pass
+            _cmd = _cmd + _array_vf + ['%s_3dtop_to_l_2d.mp4' % _dst_video_file]
+        elif src_codec_video_deinterlace_input:
+            pass
+            _cmd = _cmd + _array_vf + ['%s.mp4' % _dst_video_file]
+        else:
+            _cmd = _cmd + ['%s.mp4' % _dst_video_file]
     return(_cmd)
 
 def main():
