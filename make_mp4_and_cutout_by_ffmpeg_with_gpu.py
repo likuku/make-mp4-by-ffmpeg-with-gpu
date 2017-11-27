@@ -184,9 +184,9 @@ def make_array_vf(src_codec_video_deinterlace_input,
         pass
         _array_vf = None
     elif len(_array) == 1:
-        _array_vf = ['-vf','\"%s\"' % (_array[0])]
+        _array_vf = ['-vf','%s' % (_array[0])]
     elif len(_array) == 2:
-        _array_vf = ['-vf','\"%s,%s\"' % (_array[0],_array[1])]
+        _array_vf = ['-vf','%s,%s' % (_array[0],_array[1])]
     else:
         pass
     return(_array_vf)
@@ -228,7 +228,7 @@ def make_str_cmd(_start_timestamp,_duration,_dst_video_file):
                               _str_make_2d_l_from_top)
         if _str_make_2d_l_from_top:
             pass
-            _cmd = _cmd + _array_vf + ['%s_3dtop_to_l_2d.mp4' % _dst_video_file]
+            _cmd = _cmd + _array_vf + ['%s_3DTop2Left_2D.mp4' % _dst_video_file]
         elif src_codec_video_deinterlace_input:
             pass
             _cmd = _cmd + _array_vf + ['%s.mp4' % _dst_video_file]
@@ -249,7 +249,7 @@ def main():
                                                      str_end_stimestamp)
         _cmd = make_str_cmd(str_start_timestamp,str_duration,str_dst_video_file)
         print(_cmd)
-        exit()
+        #exit()
         subprocess.call(_cmd)
     else:
         pass
