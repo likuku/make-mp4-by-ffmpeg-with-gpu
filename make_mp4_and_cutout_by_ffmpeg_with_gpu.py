@@ -23,10 +23,10 @@ else:
     path_split_by = '/'
     ffmpeg_name = 'ffmpeg'
 
-print('版本: v1.5.1 20171127')
+print('版本: v1.5.5 20171127')
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等\n')
 print('请输入素材文件路径 :' )
-src_video_name_input=input().replace('"','').strip()
+src_video_name_input = input().replace('"','').strip()
 # 路径里包含空格，则拖拽文件时，windows 会自动给首尾加一对双引号，subprocess 不需要
 src_video_name_input_list = src_video_name_input.rsplit(path_split_by,1)
 src_video_file_name = src_video_name_input_list[1]
@@ -34,7 +34,7 @@ src_video_path = src_video_name_input_list[0]
 
 print('\n反交错滤镜 -fv yadif=1，消除隔行扫描/如1080i素材画面的锯齿/百叶窗条纹')
 print('是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]:')
-src_codec_video_deinterlace_input=input()
+src_codec_video_deinterlace_input = input()
 if len(src_codec_video_deinterlace_input) == 0:
     pass
     src_codec_video_deinterlace_input = False
@@ -58,7 +58,7 @@ print('视频编码器列表:')
 for _i in _dict_codec_video.keys():
     print(' %s. %s: %s' % (_i,_dict_codec_video[_i][0],_dict_codec_video[_i][1]))
 print('请输入视频编码器 序号(直接回车即选 0):')
-_src_codec_video_input=input()
+_src_codec_video_input = input()
 
 try:
     pass
@@ -77,7 +77,7 @@ if str_codec_video == 'copy':
     print('已选择纯剪切不编码的 copy 模式:')
 else:
     print('请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec :')
-    _src_bitrate_input=input()
+    _src_bitrate_input = input()
     if len(_src_bitrate_input) == 0:
         pass
         str_bitrate = '100M'
@@ -94,16 +94,16 @@ def get_str_cut_list_file_name_from_keyboard():
           也可用 Excel，Numbers，等表格软件制作，删除所有空白单元格后导出 .csv 文件
           ''')
     print('请输入切片列表文件路径(不明白这是什么，请直接回车忽略) :' )
-    _src_cut_list_input=input().replace('"','').strip()
+    _src_cut_list_input = input().replace('"','').strip()
     if len(_src_cut_list_input) == 0:
         _src_cut_list_input = None
     return(_src_cut_list_input)
 
-def get_str_make_2d_l_from_top_from_keyboard():
+def get_bool_make_2d_l_from_top_from_keyboard():
     pass
     print('是否从 上下(TB)3D 立体画面里抽取 上T(左眼) 并拉伸形成素材源尺寸单一2D画面:')
     print(' 1[是]? 0[否]? 直接回车则默认为 0[否]:')
-    _str_input=input()
+    _str_input = input()
     _dict_make2dl_from_top = {'0':False,'1':True}
     try:
         pass
@@ -112,7 +112,26 @@ def get_str_make_2d_l_from_top_from_keyboard():
             _str_make_2d_l_from_top = False
         else:
             _str_make_2d_l_from_top = _dict_make2dl_from_top[_str_input]
-            return(_str_make_2d_l_from_top)
+        return(_str_make_2d_l_from_top)
+    except Exception as e:
+            print ('Error: 再次运行后,重新输入正确的选项代号')
+            time.sleep(2)
+            exit()
+
+def get_bool_double_action_for_3d_2d_from_keyboard():
+    pass
+    print('是否同时输出 上下(TB)3D 画面:')
+    print(' 1[是]? 0[否]? 直接回车则默认为 0[否]:')
+    _str_input = input()
+    _dict_map_bool = {'0':False,'1':True}
+    try:
+        pass
+        if len(_str_input) == 0:
+            pass
+            _bool_double_action_3d2d = False
+        else:
+            _bool_double_action_3d2d = _dict_map_bool[_str_input]
+        return(_bool_double_action_3d2d)
     except Exception as e:
             print ('Error: 再次运行后,重新输入正确的选项代号')
             time.sleep(2)
@@ -121,7 +140,7 @@ def get_str_make_2d_l_from_top_from_keyboard():
 def get_str_start_timestamp_from_keyboard():
     pass
     print('请输入选择的视频片段开始时刻，时间戳格式 HH:mm:ss ,默认 00:00:00 :')
-    _src_start_timestamp_input=input()
+    _src_start_timestamp_input = input()
     if len(_src_start_timestamp_input) == 0:
         pass
         _src_start_timestamp_input = '00:00:00'
@@ -130,7 +149,7 @@ def get_str_start_timestamp_from_keyboard():
 def get_str_end_timestamp_from_keyboard():
     pass
     print('请输入选择的视频片段结束时刻，时间戳格式 HH:mm:ss ,默认 源视频结尾 :')
-    _src_end_timestamp_input=input()
+    _src_end_timestamp_input = input()
     if len(_src_end_timestamp_input) == 0:
         pass
         _src_end_timestamp_input = None
@@ -213,27 +232,45 @@ def make_cmd_array_for_other(_start_timestamp,_duration):
         '-pix_fmt','yuv420p']
     return(_cmd_array)
 
-def make_str_cmd(_start_timestamp,_duration,_dst_video_file):
+def make_list_for_cmd_array(_start_timestamp,_duration,_dst_video_file):
     pass
     if str_codec_video == 'copy':
         pass
-        _cmd = make_cmd_array_for_copy(_start_timestamp,_duration)
-        _cmd = _cmd + ['%s.%s' % (_dst_video_file,
+        _cmd_array = make_cmd_array_for_copy(_start_timestamp,_duration)
+        _cmd_array = _cmd_array + ['%s.%s' % (_dst_video_file,
                        (src_video_file_name.rsplit('.',1)[1]))]
+        _list_for_cmd_array = []
+        _list_for_cmd_array.append(_cmd_array)
     else:
-        _cmd = make_cmd_array_for_other(_start_timestamp,_duration)
-        _str_make_2d_l_from_top = get_str_make_2d_l_from_top_from_keyboard()
+        _cmd_array = make_cmd_array_for_other(_start_timestamp,_duration)
+        _str_make_2d_l_from_top = get_bool_make_2d_l_from_top_from_keyboard()
         _array_vf = make_array_vf(src_codec_video_deinterlace_input,
                               _str_make_2d_l_from_top)
         if _str_make_2d_l_from_top:
             pass
-            _cmd = _cmd + _array_vf + ['%s_3DTop2Left_2D.mp4' % _dst_video_file]
+            _bool_double_action = get_bool_double_action_for_3d_2d_from_keyboard()
+            if _bool_double_action:
+                pass
+                _list_for_cmd_array = []
+                if src_codec_video_deinterlace_input:
+                    pass
+                    _list_for_cmd_array.append(_cmd_array + ['-vf','yadif=1','%s.mp4' % _dst_video_file])
+                else:
+                    _list_for_cmd_array.append(_cmd_array + ['%s.mp4' % _dst_video_file])
+                _list_for_cmd_array.append(_cmd_array + _array_vf + ['%s_3DTop2Left_2D.mp4' % _dst_video_file])
+            else:
+                _list_for_cmd_array = []
+                _list_for_cmd_array.append(_cmd_array + _array_vf + ['%s_3DTop2Left_2D.mp4' % _dst_video_file])
         elif src_codec_video_deinterlace_input:
             pass
-            _cmd = _cmd + _array_vf + ['%s.mp4' % _dst_video_file]
+            _cmd_array = _cmd_array + _array_vf + ['%s.mp4' % _dst_video_file]
+            _list_for_cmd_array = []
+            _list_for_cmd_array.append(_cmd_array)
         else:
-            _cmd = _cmd + ['%s.mp4' % _dst_video_file]
-    return(_cmd)
+            _cmd_array = _cmd_array + ['%s.mp4' % _dst_video_file]
+            _list_for_cmd_array = []
+            _list_for_cmd_array.append(_cmd_array)
+    return(_list_for_cmd_array)
 
 def main():
     pass
@@ -246,10 +283,15 @@ def main():
                                          str_end_stimestamp)
         str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
                                                      str_end_stimestamp)
-        _cmd = make_str_cmd(str_start_timestamp,str_duration,str_dst_video_file)
-        print(_cmd)
-        #exit()
-        subprocess.call(_cmd)
+        _list_for_cmd_array = make_list_for_cmd_array(str_start_timestamp,
+                                       str_duration,
+                                       str_dst_video_file)
+        for _cmd_array in _list_for_cmd_array:
+            pass
+            print(_cmd_array)
+            #continue
+            subprocess.call(_cmd_array)
+        pass
     else:
         pass
         with open(str_cut_list_file_name, 'r') as _raw_cut_list_file:
@@ -261,11 +303,15 @@ def main():
                                                  str_end_stimestamp)
                 str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
                                                              str_end_stimestamp)
-                _cmd = make_str_cmd(str_start_timestamp,str_duration,
-                                    str_dst_video_file)
-                print(_cmd)
-                #continue
-                subprocess.call(_cmd)
+                _list_for_cmd_array = make_list_for_cmd_array(str_start_timestamp,
+                                               str_duration,
+                                               str_dst_video_file)
+                for _cmd_array in _list_for_cmd_array:
+                    pass
+                    print(_cmd_array)
+                    #continue
+                    subprocess.call(_cmd_array)
+                pass
 
 
 if __name__ == '__main__':
