@@ -111,7 +111,26 @@ def get_str_make_2d_l_from_top_from_keyboard():
             _str_make_2d_l_from_top = False
         else:
             _str_make_2d_l_from_top = _dict_make2dl_from_top[_str_input]
-            return(_str_make_2d_l_from_top)
+        return(_str_make_2d_l_from_top)
+    except Exception as e:
+            print ('Error: 再次运行后,重新输入正确的选项代号')
+            time.sleep(2)
+            exit()
+
+def get_bool_double_action_for_3d_2d_from_keyboard():
+    pass
+    print('是否同时输出 上下(TB)3D 画面:')
+    print(' 1[是]? 0[否]? 直接回车则默认为 0[否]:')
+    _str_input = input()
+    _dict_map_bool = {'0':False,'1':True}
+    try:
+        pass
+        if len(_str_input) == 0:
+            pass
+            _bool_double_action_3d2d = False
+        else:
+            _bool_double_action_3d2d = _dict_map_bool[_str_input]
+        return(_bool_double_action_3d2d)
     except Exception as e:
             print ('Error: 再次运行后,重新输入正确的选项代号')
             time.sleep(2)
@@ -212,27 +231,45 @@ def make_cmd_array_for_other(_start_timestamp,_duration):
         '-pix_fmt','yuv420p']
     return(_cmd_array)
 
-def make_str_cmd(_start_timestamp,_duration,_dst_video_file):
+def make_list_for_cmd_array(_start_timestamp,_duration,_dst_video_file):
     pass
     if str_codec_video == 'copy':
         pass
-        _cmd = make_cmd_array_for_copy(_start_timestamp,_duration)
-        _cmd = _cmd + ['%s.%s' % (_dst_video_file,
+        _cmd_array = make_cmd_array_for_copy(_start_timestamp,_duration)
+        _cmd_array = _cmd_array + ['%s.%s' % (_dst_video_file,
                        (src_video_file_name.rsplit('.',1)[1]))]
+        _list_for_cmd_array = []
+        _list_for_cmd_array.append(_cmd_array)
     else:
-        _cmd = make_cmd_array_for_other(_start_timestamp,_duration)
+        _cmd_array = make_cmd_array_for_other(_start_timestamp,_duration)
         _str_make_2d_l_from_top = get_str_make_2d_l_from_top_from_keyboard()
         _array_vf = make_array_vf(src_codec_video_deinterlace_input,
                               _str_make_2d_l_from_top)
         if _str_make_2d_l_from_top:
             pass
-            _cmd = _cmd + _array_vf + ['%s_3DTop2Left_2D.mp4' % _dst_video_file]
+            _bool_double_action = get_bool_double_action_for_3d_2d_from_keyboard()
+            if _bool_double_action:
+                pass
+                _list_for_cmd_array = []
+                if src_codec_video_deinterlace_input:
+                    pass
+                    _list_for_cmd_array.append(_cmd_array + ['-vf','yadif=1','%s.mp4' % _dst_video_file])
+                else:
+                    _list_for_cmd_array.append(_cmd_array + ['%s.mp4' % _dst_video_file])
+                _list_for_cmd_array.append(_cmd_array + _array_vf + ['%s_3DTop2Left_2D.mp4' % _dst_video_file])
+            else:
+                _list_for_cmd_array = []
+                _list_for_cmd_array.append(_cmd_array + _array_vf + ['%s_3DTop2Left_2D.mp4' % _dst_video_file])
         elif src_codec_video_deinterlace_input:
             pass
-            _cmd = _cmd + _array_vf + ['%s.mp4' % _dst_video_file]
+            _cmd_array = _cmd_array + _array_vf + ['%s.mp4' % _dst_video_file]
+            _list_for_cmd_array = []
+            _list_for_cmd_array.append(_cmd_array)
         else:
-            _cmd = _cmd + ['%s.mp4' % _dst_video_file]
-    return(_cmd)
+            _cmd_array = _cmd_array + ['%s.mp4' % _dst_video_file]
+            _list_for_cmd_array = []
+            _list_for_cmd_array.append(_cmd_array)
+    return(_list_for_cmd_array)
 
 def main():
     pass
@@ -245,10 +282,15 @@ def main():
                                          str_end_stimestamp)
         str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
                                                      str_end_stimestamp)
-        _cmd = make_str_cmd(str_start_timestamp,str_duration,str_dst_video_file)
-        print(_cmd)
-        exit()
-        subprocess.call(_cmd)
+        _list_for_cmd_array = make_list_for_cmd_array(str_start_timestamp,
+                                       str_duration,
+                                       str_dst_video_file)
+        for _cmd_array in _list_for_cmd_array:
+            pass
+            print(_cmd_array)
+            continue
+            subprocess.call(_cmd_array)
+        pass
     else:
         pass
         with open(str_cut_list_file_name, 'r') as _raw_cut_list_file:
@@ -260,11 +302,15 @@ def main():
                                                  str_end_stimestamp)
                 str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
                                                              str_end_stimestamp)
-                _cmd = make_str_cmd(str_start_timestamp,str_duration,
-                                    str_dst_video_file)
-                print(_cmd)
-                continue
-                subprocess.call(_cmd)
+                _list_for_cmd_array = make_list_for_cmd_array(str_start_timestamp,
+                                               str_duration,
+                                               str_dst_video_file)
+                for _cmd_array in _list_for_cmd_array:
+                    pass
+                    print(_cmd_array)
+                    continue
+                    subprocess.call(_cmd_array)
+                pass
 
 
 if __name__ == '__main__':
