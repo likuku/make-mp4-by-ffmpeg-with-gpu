@@ -184,10 +184,8 @@ def make_array_vf(src_codec_video_deinterlace_input,
     if len(_array) == 0:
         pass
         _array_vf = None
-    elif len(_array) == 1:
-        _array_vf = ['-vf','%s' % (_array[0])]
-    elif len(_array) == 2:
-        _array_vf = ['-vf','%s,%s' % (_array[0],_array[1])]
+    elif len(_array) > 0:
+        _array_vf = ['-vf','%s' % (','.join(_array))]
     else:
         pass
     return(_array_vf)
