@@ -249,7 +249,7 @@ def main():
                                                      str_end_stimestamp)
         _cmd = make_str_cmd(str_start_timestamp,str_duration,str_dst_video_file)
         print(_cmd)
-        #exit()
+        exit()
         subprocess.call(_cmd)
     else:
         pass
