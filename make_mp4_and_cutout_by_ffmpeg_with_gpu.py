@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Nov27,2017
+last update on Nov28,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -32,7 +32,7 @@ src_video_file_name = src_video_name_input_list[1]
 src_video_path = src_video_name_input_list[0]
 
 print('\n反交错滤镜 -fv yadif=1，消除隔行扫描/如1080i素材画面的锯齿/百叶窗条纹')
-print('是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]:')
+print(' 是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]:')
 src_codec_video_deinterlace_input = input()
 if len(src_codec_video_deinterlace_input) == 0:
     pass
@@ -54,7 +54,7 @@ _dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
                    '5':['copy','Copy data from Source,the Fastest']}
 
 print('视频编码器列表:')
-for _i in _dict_codec_video.keys():
+for _i in sorted(_dict_codec_video.keys()):
     print(' %s. %s: %s' % (_i,_dict_codec_video[_i][0],_dict_codec_video[_i][1]))
 print('请输入视频编码器 序号(直接回车即选 0):')
 _src_codec_video_input = input()
