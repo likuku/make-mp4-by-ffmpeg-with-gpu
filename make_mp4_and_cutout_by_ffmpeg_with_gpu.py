@@ -23,7 +23,7 @@ else:
     path_split_by = '/'
     ffmpeg_name = 'ffmpeg'
 
-print('版本: v1.5.8 20171128')
+print('版本: v1.5.9 20171128')
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等')
 print('推荐使用 FFmpeg v3.3.x 版本，原因:')
 print('FFmpeg v3.4 版本在 macOS 转码后打包文件时极机率会僵死无法完成','\n')
