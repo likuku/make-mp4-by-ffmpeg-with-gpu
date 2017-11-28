@@ -51,7 +51,7 @@ try:
                                                 path_split_by,
                                                 _video))
         print(_cmd_array)
-        #continue
+        continue
         subprocess.call(_cmd_array)
 except Exception as e:
     raise
