@@ -283,6 +283,7 @@ def make_list_for_cmd_array(_start_timestamp,
                               _bool_make_2d_l_from_top)
         if _bool_make_2d_l_from_top:
             pass
+            _cmd_array = _cmd_array + ['-aspect','16:9']
             if _bool_double_action_3dt2dl:
                 pass
                 _list_for_cmd_array = []
