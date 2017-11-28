@@ -38,7 +38,7 @@ def make_cmd_array(_src_video):
         '-map','0:v',
         '-ac','2',
         '-map','0:a',
-        '-b:v','80M',
+        '-b:v','40M',
         '-pix_fmt','yuv420p',
         '-y',
         '%s_3DTop2Left_2D.mp4' % _src_video]
@@ -51,7 +51,7 @@ try:
                                                 path_split_by,
                                                 _video))
         print(_cmd_array)
-        continue
+        #continue
         subprocess.call(_cmd_array)
 except Exception as e:
     raise
