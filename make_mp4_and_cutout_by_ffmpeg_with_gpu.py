@@ -242,12 +242,12 @@ def make_list_for_cmd_array(_start_timestamp,_duration,_dst_video_file):
         _list_for_cmd_array.append(_cmd_array)
     else:
         _cmd_array = make_cmd_array_for_other(_start_timestamp,_duration)
-        _str_make_2d_l_from_top = get_bool_make_2d_l_from_top_from_keyboard()
+        _str_make_2d_l_from_top = get_bool_make_2d_l_from_top_from_keyboard() # interactive everytime on loop for str_cut_list_file_name
         _array_vf = make_array_vf(src_codec_video_deinterlace_input,
                               _str_make_2d_l_from_top)
         if _str_make_2d_l_from_top:
             pass
-            _bool_double_action = get_bool_double_action_for_3d_2d_from_keyboard()
+            _bool_double_action = get_bool_double_action_for_3d_2d_from_keyboard() # interactive everytime on loop for str_cut_list_file_name
             if _bool_double_action:
                 pass
                 _list_for_cmd_array = []
