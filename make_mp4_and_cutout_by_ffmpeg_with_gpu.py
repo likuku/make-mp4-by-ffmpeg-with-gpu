@@ -159,7 +159,11 @@ def set_bitrate_for_3Dtop2Dleft_from_list_for_cmd_array(_list_cmd_array,
         pass
     else:
         for _index in list(range(len(_list_cmd_array))):
-            if 'crop=iw:(ih/2):0:0,scale=iw:(ih*2)' in _list_cmd_array[_index]:
+            if ('crop=iw:(ih/2):0:0,scale=iw:(ih*2)' in
+                _list_cmd_array[_index]
+                or 'yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)' in
+                _list_cmd_array[_index]):
+                pass
                 _cmd_array = _list_cmd_array[_index]
                 _list_cmd_array[_index][_cmd_array.index('-b:v')+1] = _str_bitrate
             else:
