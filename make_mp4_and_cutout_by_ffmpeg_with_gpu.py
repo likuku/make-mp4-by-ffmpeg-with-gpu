@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Nov29,2017
+last update on Dec3,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -189,6 +189,12 @@ def get_bool_double_action_for_3d_2d_from_keyboard():
             time.sleep(2)
             exit()
 
+def rebuild_str_timestamp_input(_str_input):
+    pass
+    _list_str_timestamp = list(map(lambda x:'%02d' % int(x),_str_input.split(':')))
+    _str_input = ':'.join(_list_str_timestamp)
+    return(_str_input)
+
 def get_str_start_timestamp_from_keyboard():
     pass
     _str_input_msg = ' 请输入选择的视频片段开始时刻，时间戳格式 HH:mm:ss ,默认 00:00:00 : '
@@ -196,6 +202,9 @@ def get_str_start_timestamp_from_keyboard():
     if len(_src_start_timestamp_input) == 0:
         pass
         _src_start_timestamp_input = '00:00:00'
+    else:
+        pass
+        _src_start_timestamp_input = rebuild_str_timestamp_input(_src_start_timestamp_input)
     return(_src_start_timestamp_input)
 
 def get_str_end_timestamp_from_keyboard():
@@ -205,6 +214,9 @@ def get_str_end_timestamp_from_keyboard():
     if len(_src_end_timestamp_input) == 0:
         pass
         _src_end_timestamp_input = None
+    else:
+        pass
+        _src_end_timestamp_input = rebuild_str_timestamp_input(_src_end_timestamp_input)
     return(_src_end_timestamp_input)
 
 def make_str_duration(_start_timestamp,_end_stimestamp):
