@@ -42,13 +42,31 @@ def check_str_raw_src_media_path(_str_input):
         _bool_src_media_path = os.access(_str_input,os.F_OK)
     return(_bool_src_media_path)
 
-def rebuild_list_str_src_media_path(_str_input):
+def rebuild_list_str_src_media_path(_str_input,_path_split_by):
     pass
-    src_video_name_input = input().replace('"','').strip()
+    _str_src_input = _str_input.replace('"','').strip()
     # 路径里包含空格，则拖拽文件时，windows 会自动给首尾加一对双引号，subprocess 不需要
-    src_video_name_input_list = src_video_name_input.rsplit(path_split_by,1)
-    src_video_file_name = src_video_name_input_list[1]
-    src_video_path = src_video_name_input_list[0]
+    _list_src_media_path_file = _str_src_input.rsplit(_path_split_by,1)
+    #src_video_file_name = _list_src_media_path_file[1]
+    #src_video_path = _list_src_media_path_file[0]
+    return(_list_src_media_path_file)
+
+# tmp_for_rebuild_Dec2017
+_tmp_src_media_path = get_str_raw_src_media_path_from_keyboard()
+if check_str_raw_src_media_path(_tmp_src_media_path):
+    pass
+    _tmp_src_media_path_list = rebuild_list_str_src_media_path(_tmp_src_media_path,
+                                                               path_split_by)
+    src_video_file_name = _tmp_src_media_path_list[1]
+    src_video_path = _tmp_src_media_path_list[0]
+    src_video_name_input = '%s%s%s' % (src_video_path,
+                                       path_split_by,
+                                       src_video_file_name)
+else:
+    print('素材文件无法访问，再次运行后,重新输入')
+    time.sleep(2)
+    exit()
+# tmp_for_rebuild_Dec2017
 
 print('反交错滤镜 -fv yadif=1，消除隔行扫描/如1080i素材画面的锯齿/百叶窗条纹')
 _str_input_msg = ' 是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]: '
