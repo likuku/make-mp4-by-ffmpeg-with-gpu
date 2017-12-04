@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Dec3,2017
+last update on Dec4,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -26,12 +26,29 @@ else:
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等')
 print('推荐使用 FFmpeg v3.3.x 版本，原因:')
 print('FFmpeg v3.4 版本在 macOS 转码后打包文件时极机率会僵死无法完成','\n')
-print('请输入素材文件路径 : ' )
-src_video_name_input = input().replace('"','').strip()
-# 路径里包含空格，则拖拽文件时，windows 会自动给首尾加一对双引号，subprocess 不需要
-src_video_name_input_list = src_video_name_input.rsplit(path_split_by,1)
-src_video_file_name = src_video_name_input_list[1]
-src_video_path = src_video_name_input_list[0]
+
+def get_str_raw_src_media_path_from_keyboard():
+    pass
+    _str_input_msg = '请输入素材文件路径 : '
+    _str_raw_input = str(input(_str_input_msg))
+    return(_str_raw_input)
+
+def check_str_raw_src_media_path(_str_input):
+    pass
+    if _str_input == 0:
+        pass
+        _bool_src_media_path = False
+    else:
+        _bool_src_media_path = os.access(_str_input,os.F_OK)
+    return(_bool_src_media_path)
+
+def rebuild_list_str_src_media_path(_str_input):
+    pass
+    src_video_name_input = input().replace('"','').strip()
+    # 路径里包含空格，则拖拽文件时，windows 会自动给首尾加一对双引号，subprocess 不需要
+    src_video_name_input_list = src_video_name_input.rsplit(path_split_by,1)
+    src_video_file_name = src_video_name_input_list[1]
+    src_video_path = src_video_name_input_list[0]
 
 print('反交错滤镜 -fv yadif=1，消除隔行扫描/如1080i素材画面的锯齿/百叶窗条纹')
 _str_input_msg = ' 是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]: '

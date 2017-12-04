@@ -1,7 +1,15 @@
 import unittest
 from make_mp4_and_cutout_by_ffmpeg_with_gpu import *
 
-class Test_make_array_vf(unittest.TestCase):
+class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
+    def test_check_str_raw_src_media_path(self):
+        pass
+        self.assertEqual(False,
+                         check_str_raw_src_media_path(''))
+        self.assertEqual(False,
+                         check_str_raw_src_media_path('.13123241'))
+        self.assertEqual(True,
+                         check_str_raw_src_media_path('.'))
     def test_rebuild_str_timestamp_input(self):
         self.assertEqual('01:01:01',
                          rebuild_str_timestamp_input('01:01:01'))
