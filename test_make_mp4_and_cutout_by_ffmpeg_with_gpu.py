@@ -2,6 +2,14 @@ import unittest
 from make_mp4_and_cutout_by_ffmpeg_with_gpu import *
 
 class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
+    def test_rebuild_bool_deinterlace(self):
+        pass
+        self.assertTrue(rebuild_bool_deinterlace('1'))
+        self.assertFalse(rebuild_bool_deinterlace('0'))
+        self.assertFalse(rebuild_bool_deinterlace(''))
+        #with self.assertRaises(TypeError):
+        #    value = rebuild_bool_deinterlace('balbala')
+        #self.assertEqual(False,rebuild_bool_deinterlace('balabla'))
     def test_check_str_raw_src_media_path(self):
         pass
         self.assertEqual(False,

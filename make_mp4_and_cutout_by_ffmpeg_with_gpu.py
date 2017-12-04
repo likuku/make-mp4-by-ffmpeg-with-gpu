@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Dec4,2017
+last update on Dec5,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -68,20 +68,30 @@ else:
     exit()
 # tmp_for_rebuild_Dec2017
 
-print('反交错滤镜 -fv yadif=1，消除隔行扫描/如1080i素材画面的锯齿/百叶窗条纹')
-_str_input_msg = ' 是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]: '
-src_codec_video_deinterlace_input = str(input(_str_input_msg))
-if len(src_codec_video_deinterlace_input) == 0:
+def get_str_raw_deinterlace_from_keyboard():
     pass
-    src_codec_video_deinterlace_input = False
-elif src_codec_video_deinterlace_input == '0':
-    src_codec_video_deinterlace_input = False
-elif src_codec_video_deinterlace_input == '1':
-    src_codec_video_deinterlace_input = True
-else:
-    print ('Error: 再次运行后,重新输入正确的选项代号')
-    time.sleep(2)
-    exit()
+    print('反交错滤镜 -fv yadif=1，消除隔行扫描/如1080i素材画面的锯齿/百叶窗条纹')
+    _str_input_msg = ' 是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]: '
+    _str_raw_input = str(input(_str_input_msg))
+    return(_str_raw_input)
+
+def rebuild_bool_deinterlace(_str_input):
+    pass
+    if len(_str_input) == 0 or _str_input == '0':
+        pass
+        _bool_deinterlace_input = False
+    elif _str_input == '1':
+        _bool_deinterlace_input = True
+    else:
+        print ('Error: 再次运行后,重新输入正确的选项代号')
+        time.sleep(2)
+        exit()
+    return(_bool_deinterlace_input)
+
+# tmp_for_rebuild_Dec2017
+_tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
+src_codec_video_deinterlace_input = rebuild_bool_deinterlace(_tmp_deinterlace)
+# tmp_for_rebuild_Dec2017
 
 _dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
                    '1':['libx264','H.264 with CPU'],
