@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Dec5,2017
+last update on Dec6,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -93,42 +93,72 @@ _tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
 src_codec_video_deinterlace_input = rebuild_bool_deinterlace(_tmp_deinterlace)
 # tmp_for_rebuild_Dec2017
 
-_dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
+dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
                    '1':['libx264','H.264 with CPU'],
                    '2':['hevc_nvenc','H.265 with Nvidia GPU'],
                    '3':['libx265','H.265 with CPU'],
                    '4':['h264_videotoolbox','H.265 with GPU on macOS'],
                    '5':['copy','Copy data from Source,the Fastest']}
 
-print('视频编码器列表:')
-for _i in sorted(_dict_codec_video.keys()):
-    print(' %s. %s: %s' % (_i,_dict_codec_video[_i][0],_dict_codec_video[_i][1]))
-_str_input_msg = ' 请输入视频编码器 序号(直接回车即选 [0]): '
-_src_codec_video_input = str(input(_str_input_msg))
-
-try:
+def show_dict_codec_video(_dict_input):
     pass
-    if len(_src_codec_video_input) == 0:
-        pass
-        str_codec_video = _dict_codec_video['0'][0]
-    else:
-        str_codec_video = _dict_codec_video[_src_codec_video_input][0]
-except Exception as e:
-        print ('Error: 再次运行后,重新输入正确的选项代号')
-        time.sleep(2)
-        exit()
+    print('视频编码器列表:')
+    for _i in sorted(dict_codec_video.keys()):
+        print(' %s. %s: %s' % (_i,dict_codec_video[_i][0],dict_codec_video[_i][1]))
 
+def get_str_raw_codec_video_from_keyboard():
+    pass
+    _str_input_msg = ' 请输入视频编码器 序号(直接回车即选 [0]): '
+    _str_raw_input = str(input(_str_input_msg))
+    return(_str_raw_input)
+
+# tmp_for_rebuild_Dec2017
+show_dict_codec_video(dict_codec_video)
+src_codec_video_input = get_str_raw_codec_video_from_keyboard()
+# tmp_for_rebuild_Dec2017
+
+def check_and_rebuild_str_codec_video(_str_input):
+    pass
+    try:
+        pass
+        if len(_str_input) == 0:
+            pass
+            _str_codec_video = dict_codec_video['0'][0]
+        else:
+            _str_codec_video = dict_codec_video[_str_input][0]
+        return(_str_codec_video)
+    except Exception as e:
+            print ('Error: 再次运行后,重新输入正确的选项代号')
+            time.sleep(2)
+            exit()
+
+# tmp_for_rebuild_Dec2017
+str_codec_video = check_and_rebuild_str_codec_video(src_codec_video_input)
+# tmp_for_rebuild_Dec2017
+
+def get_str_raw_bitrate_video_from_keyboard():
+    pass
+    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec : '
+    _str_raw_input = str(input(_str_input_msg))
+    return(_str_raw_input)
+
+def check_and_rebuild_str_bitrate_video(_str_input):
+    pass
+    if len(_str_input) == 0:
+        pass
+        _str_bitrate = '100M'
+    else:
+        _str_bitrate = '%sM' % _str_input
+    return(_str_bitrate)
+
+# tmp_for_rebuild_Dec2017
 if str_codec_video == 'copy':
     pass
     print('已选择纯剪切不编码的 copy 模式:')
 else:
-    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec : '
-    _src_bitrate_input = str(input(_str_input_msg))
-    if len(_src_bitrate_input) == 0:
-        pass
-        str_bitrate = '100M'
-    else:
-        str_bitrate = '%sM' % _src_bitrate_input
+    _src_bitrate_input = get_str_raw_bitrate_video_from_keyboard()
+    str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
+# tmp_for_rebuild_Dec2017
 
 def get_str_cut_list_file_name_from_keyboard():
     pass

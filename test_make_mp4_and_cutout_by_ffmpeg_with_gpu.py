@@ -2,14 +2,6 @@ import unittest
 from make_mp4_and_cutout_by_ffmpeg_with_gpu import *
 
 class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
-    def test_rebuild_bool_deinterlace(self):
-        pass
-        self.assertTrue(rebuild_bool_deinterlace('1'))
-        self.assertFalse(rebuild_bool_deinterlace('0'))
-        self.assertFalse(rebuild_bool_deinterlace(''))
-        #with self.assertRaises(TypeError):
-        #    value = rebuild_bool_deinterlace('balbala')
-        #self.assertEqual(False,rebuild_bool_deinterlace('balabla'))
     def test_check_str_raw_src_media_path(self):
         pass
         self.assertEqual(False,
@@ -18,6 +10,34 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                          check_str_raw_src_media_path('.13123241'))
         self.assertEqual(True,
                          check_str_raw_src_media_path('.'))
+    def test_rebuild_bool_deinterlace(self):
+        pass
+        self.assertTrue(rebuild_bool_deinterlace('1'))
+        self.assertFalse(rebuild_bool_deinterlace('0'))
+        self.assertFalse(rebuild_bool_deinterlace(''))
+        #with self.assertRaises(TypeError):
+        #    value = rebuild_bool_deinterlace('balbala')
+        #self.assertEqual(False,rebuild_bool_deinterlace('balabla'))
+    def test_check_and_rebuild_str_codec_video(self):
+        pass
+        self.assertEqual('h264_nvenc',
+                         check_and_rebuild_str_codec_video('0'))
+        self.assertEqual('libx264',
+                         check_and_rebuild_str_codec_video('1'))
+        self.assertEqual('hevc_nvenc',
+                         check_and_rebuild_str_codec_video('2'))
+        self.assertEqual('libx265',
+                         check_and_rebuild_str_codec_video('3'))
+        self.assertEqual('h264_videotoolbox',
+                         check_and_rebuild_str_codec_video('4'))
+        self.assertEqual('copy',
+                         check_and_rebuild_str_codec_video('5'))
+    def test_check_and_rebuild_str_bitrate_video(self):
+        pass
+        self.assertEqual('100M',
+                         check_and_rebuild_str_bitrate_video(''))
+        self.assertEqual('10M',
+                         check_and_rebuild_str_bitrate_video('10'))
     def test_rebuild_str_timestamp_input(self):
         self.assertEqual('01:01:01',
                          rebuild_str_timestamp_input('01:01:01'))
