@@ -318,17 +318,20 @@ def make_str_duration(_start_timestamp,_end_stimestamp):
         _duration = str(int((_time_to - _time_ss).total_seconds()))
     return(_duration)
 
-def make_str_dst_video_file(_start_timestamp,_end_stimestamp):
+def make_str_dst_video_file(_start_timestamp,
+                            _end_stimestamp,
+                            _src_video_path,
+                            _src_video_file_name):
     pass
     if _end_stimestamp == None:
         pass
-        _dst_video_file_name = '%s_%s_to_end'% (src_video_file_name,
+        _dst_video_file_name = '%s_%s_to_end'% (_src_video_file_name,
             _start_timestamp.replace(':','_'))
     else:
-        _dst_video_file_name = '%s_%s_to_%s'% (src_video_file_name,
+        _dst_video_file_name = '%s_%s_to_%s'% (_src_video_file_name,
             _start_timestamp.replace(':','_'),
             _end_stimestamp.replace(':','_'))
-    _dst_video_file = '%s%s%s' % (src_video_path,
+    _dst_video_file = '%s%s%s' % (_src_video_path,
                                   path_split_by,
                                   _dst_video_file_name)
     return(_dst_video_file)
@@ -443,11 +446,11 @@ def main():
         pass
         _tmp_src_media_path_list = rebuild_list_str_src_media_path(_tmp_src_media_path,
                                                                    path_split_by)
-        src_video_file_name = _tmp_src_media_path_list[1]
-        src_video_path = _tmp_src_media_path_list[0]
-        src_video_name_input = '%s%s%s' % (src_video_path,
+        _src_video_file_name = _tmp_src_media_path_list[1]
+        _src_video_path = _tmp_src_media_path_list[0]
+        _src_video_name_input = '%s%s%s' % (_src_video_path,
                                            path_split_by,
-                                           src_video_file_name)
+                                           _src_video_file_name)
     else:
         print('素材文件无法访问，再次运行后,重新输入')
         time.sleep(2)
@@ -481,7 +484,9 @@ def main():
         str_duration = make_str_duration(str_start_timestamp,
                                          str_end_stimestamp)
         str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
-                                                     str_end_stimestamp)
+                                                     str_end_stimestamp,
+                                                     _src_video_path,
+                                                     _src_video_file_name)
         if str_codec_video != 'copy':
             _bool_3dt2dl = get_bool_make_2d_l_from_top_from_keyboard()
             if _bool_3dt2dl:

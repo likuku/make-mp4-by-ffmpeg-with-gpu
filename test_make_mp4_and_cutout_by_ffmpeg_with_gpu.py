@@ -47,6 +47,13 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                          rebuild_str_timestamp_input('100:1:1'))
         self.assertEqual('01:01:00',
                          rebuild_str_timestamp_input('01:01:0'))
+    def test_make_str_dst_video_file(self):
+        pass
+        self.assertEqual('/path%sfile.ext_00_00_00_to_00_00_60' % path_split_by,
+                         make_str_dst_video_file('00:00:00',
+                                                 '00:00:60',
+                                                 '/path',
+                                                 'file.ext'))
     def test_make_array_vf(self):
         self.assertEqual(['-vf', 'yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)'],
                          make_array_vf(True,True))
