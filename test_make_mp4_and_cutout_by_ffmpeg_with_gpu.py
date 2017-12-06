@@ -10,6 +10,16 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                          check_str_raw_src_media_path('.13123241'))
         self.assertEqual(True,
                          check_str_raw_src_media_path('.'))
+    def test_rebuild_list_str_src_media_path(self):
+        pass
+        self.assertEqual(['/path/subPath','file.ext'],
+             rebuild_list_str_src_media_path('/path/subPath/file.ext',path_split_by))
+        self.assertEqual(['/path/subPath','file.ext'],
+             rebuild_list_str_src_media_path('"/path/subPath/file.ext"',path_split_by))
+        self.assertEqual(['/path/subPath','file.ext'],
+             rebuild_list_str_src_media_path('/path/subPath/file.ext ',path_split_by))
+        self.assertEqual(['/path/sub\ Path','file.ext'],
+             rebuild_list_str_src_media_path('/path/sub\ Path/file.ext ',path_split_by))
     def test_rebuild_bool_deinterlace(self):
         pass
         self.assertTrue(rebuild_bool_deinterlace('1'))
