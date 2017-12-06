@@ -358,30 +358,40 @@ def make_array_vf(src_codec_video_deinterlace_input,
         pass
     return(_array_vf)
 
-def make_cmd_array_for_copy(_start_timestamp,_duration):
+def make_cmd_array_for_copy(_start_timestamp,
+                            _src_video_name_input,
+                            _str_codec_video,
+                            _duration):
     pass
     _cmd_array = ['%s' % ffmpeg_name,
         '-ss','%s' % _start_timestamp,
-        '-i','%s' % src_video_name_input,
-        '-c','%s' % str_codec_video,
+        '-i','%s' % _src_video_name_input,
+        '-c','%s' % _str_codec_video,
         '-t','%s' % _duration]
     return(_cmd_array)
 
-def make_cmd_array_for_other(_start_timestamp,_duration):
+def make_cmd_array_for_other(_start_timestamp,
+                             _src_video_name_input,
+                             _str_codec_video,
+                             _str_bitrate,
+                             _duration):
     pass
     _cmd_array = ['%s' % ffmpeg_name,
         '-ss','%s' % _start_timestamp,
-        '-i','%s' % src_video_name_input,
-        '-c:v','%s' % str_codec_video,
+        '-i','%s' % _src_video_name_input,
+        '-c:v','%s' % _str_codec_video,
         '-map','0:v',
         '-ac','2',
         '-map','0:a',
-        '-b:v','%s' % str_bitrate,
+        '-b:v','%s' % _str_bitrate,
         '-t','%s' % _duration,
         '-pix_fmt','yuv420p']
     return(_cmd_array)
 
-def make_list_for_cmd_array(_str_codec_video,
+def make_list_for_cmd_array(_src_video_name_input,
+                            _bool_video_deinterlace,
+                            _str_codec_video,
+                            _str_bitrate,
                             _start_timestamp,
                             _duration,
                             _dst_video_file,
@@ -403,13 +413,17 @@ def make_list_for_cmd_array(_str_codec_video,
         _list_for_cmd_array = []
         _list_for_cmd_array.append(_cmd_array)
     else:
-        _cmd_array = make_cmd_array_for_other(_start_timestamp,_duration)
+        _cmd_array = make_cmd_array_for_other(_start_timestamp,
+                                              _src_video_name_input,
+                                              _str_codec_video,
+                                              _str_bitrate,
+                                              _duration)
         if _bool_rewrite_output:
             pass
             _cmd_array = _cmd_array + ['-y']
         else:
             pass
-        _array_vf = make_array_vf(src_codec_video_deinterlace_input,
+        _array_vf = make_array_vf(_bool_video_deinterlace,
                               _bool_make_2d_l_from_top)
         if _bool_make_2d_l_from_top:
             pass
@@ -426,7 +440,7 @@ def make_list_for_cmd_array(_str_codec_video,
             else:
                 _list_for_cmd_array = []
                 _list_for_cmd_array.append(_cmd_array + _array_vf + ['%s_3DTop2Left_2D.mp4' % _dst_video_file])
-        elif src_codec_video_deinterlace_input:
+        elif _bool_video_deinterlace:
             pass
             _cmd_array = _cmd_array + _array_vf + ['%s.mp4' % _dst_video_file]
             _list_for_cmd_array = []
@@ -459,7 +473,7 @@ def main():
     # tmp_for_rebuild_Dec2017
     # tmp_for_rebuild_Dec2017
     _tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
-    src_codec_video_deinterlace_input = rebuild_bool_deinterlace(_tmp_deinterlace)
+    bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
     # tmp_for_rebuild_Dec2017
     # tmp_for_rebuild_Dec2017
     show_dict_codec_video(dict_codec_video)
@@ -501,7 +515,10 @@ def main():
             pass
             _bool_3dt2dl,_bool_double_3dt2dl = False,False
             _str_bitrate_3dt2dl = None
-        _list_for_cmd_array = make_list_for_cmd_array(str_codec_video,
+        _list_for_cmd_array = make_list_for_cmd_array(_src_video_name_input,
+                                                      bool_video_deinterlace,
+                                                      str_codec_video,
+                                                      str_bitrate,
                                                       str_start_timestamp,
                                                       str_duration,
                                                       str_dst_video_file,
