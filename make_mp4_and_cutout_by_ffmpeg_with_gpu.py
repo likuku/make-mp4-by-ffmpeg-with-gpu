@@ -23,6 +23,13 @@ else:
     path_split_by = '/'
     ffmpeg_name = 'ffmpeg'
 
+dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
+                   '1':['libx264','H.264 with CPU'],
+                   '2':['hevc_nvenc','H.265 with Nvidia GPU'],
+                   '3':['libx265','H.265 with CPU'],
+                   '4':['h264_videotoolbox','H.265 with GPU on macOS'],
+                   '5':['copy','Copy data from Source,the Fastest']}
+
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等')
 print('推荐使用 FFmpeg v3.3.x 版本，原因:')
 print('FFmpeg v3.4 版本在 macOS 转码后打包文件时极机率会僵死无法完成','\n')
@@ -92,13 +99,6 @@ def rebuild_bool_deinterlace(_str_input):
 _tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
 src_codec_video_deinterlace_input = rebuild_bool_deinterlace(_tmp_deinterlace)
 # tmp_for_rebuild_Dec2017
-
-dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
-                   '1':['libx264','H.264 with CPU'],
-                   '2':['hevc_nvenc','H.265 with Nvidia GPU'],
-                   '3':['libx265','H.265 with CPU'],
-                   '4':['h264_videotoolbox','H.265 with GPU on macOS'],
-                   '5':['copy','Copy data from Source,the Fastest']}
 
 def show_dict_codec_video(_dict_input):
     pass
