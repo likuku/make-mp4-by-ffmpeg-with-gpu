@@ -59,6 +59,7 @@ def rebuild_list_str_src_media_path(_str_input,_path_split_by):
     return(_list_src_media_path_file)
 
 # tmp_for_rebuild_Dec2017
+'''
 _tmp_src_media_path = get_str_raw_src_media_path_from_keyboard()
 if check_str_raw_src_media_path(_tmp_src_media_path):
     pass
@@ -73,6 +74,7 @@ else:
     print('素材文件无法访问，再次运行后,重新输入')
     time.sleep(2)
     exit()
+'''
 # tmp_for_rebuild_Dec2017
 
 def get_str_raw_deinterlace_from_keyboard():
@@ -96,8 +98,10 @@ def rebuild_bool_deinterlace(_str_input):
     return(_bool_deinterlace_input)
 
 # tmp_for_rebuild_Dec2017
+'''
 _tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
 src_codec_video_deinterlace_input = rebuild_bool_deinterlace(_tmp_deinterlace)
+'''
 # tmp_for_rebuild_Dec2017
 
 def show_dict_codec_video(_dict_input):
@@ -113,8 +117,10 @@ def get_str_raw_codec_video_from_keyboard():
     return(_str_raw_input)
 
 # tmp_for_rebuild_Dec2017
+'''
 show_dict_codec_video(dict_codec_video)
 src_codec_video_input = get_str_raw_codec_video_from_keyboard()
+'''
 # tmp_for_rebuild_Dec2017
 
 def check_and_rebuild_str_codec_video(_str_input):
@@ -133,7 +139,7 @@ def check_and_rebuild_str_codec_video(_str_input):
             exit()
 
 # tmp_for_rebuild_Dec2017
-str_codec_video = check_and_rebuild_str_codec_video(src_codec_video_input)
+#str_codec_video = check_and_rebuild_str_codec_video(src_codec_video_input)
 # tmp_for_rebuild_Dec2017
 
 def get_str_raw_bitrate_video_from_keyboard():
@@ -152,12 +158,14 @@ def check_and_rebuild_str_bitrate_video(_str_input):
     return(_str_bitrate)
 
 # tmp_for_rebuild_Dec2017
+'''
 if str_codec_video == 'copy':
     pass
     print('已选择纯剪切不编码的 copy 模式:')
 else:
     _src_bitrate_input = get_str_raw_bitrate_video_from_keyboard()
     str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
+'''
 # tmp_for_rebuild_Dec2017
 
 def get_str_cut_list_file_name_from_keyboard():
@@ -429,6 +437,41 @@ def make_list_for_cmd_array(_start_timestamp,
 
 def main():
     pass
+    # tmp_for_rebuild_Dec2017
+    _tmp_src_media_path = get_str_raw_src_media_path_from_keyboard()
+    if check_str_raw_src_media_path(_tmp_src_media_path):
+        pass
+        _tmp_src_media_path_list = rebuild_list_str_src_media_path(_tmp_src_media_path,
+                                                                   path_split_by)
+        src_video_file_name = _tmp_src_media_path_list[1]
+        src_video_path = _tmp_src_media_path_list[0]
+        src_video_name_input = '%s%s%s' % (src_video_path,
+                                           path_split_by,
+                                           src_video_file_name)
+    else:
+        print('素材文件无法访问，再次运行后,重新输入')
+        time.sleep(2)
+        exit()
+    # tmp_for_rebuild_Dec2017
+    # tmp_for_rebuild_Dec2017
+    _tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
+    src_codec_video_deinterlace_input = rebuild_bool_deinterlace(_tmp_deinterlace)
+    # tmp_for_rebuild_Dec2017
+    # tmp_for_rebuild_Dec2017
+    show_dict_codec_video(dict_codec_video)
+    src_codec_video_input = get_str_raw_codec_video_from_keyboard()
+    # tmp_for_rebuild_Dec2017
+    # tmp_for_rebuild_Dec2017
+    str_codec_video = check_and_rebuild_str_codec_video(src_codec_video_input)
+    # tmp_for_rebuild_Dec2017
+    # tmp_for_rebuild_Dec2017
+    if str_codec_video == 'copy':
+        pass
+        print('已选择纯剪切不编码的 copy 模式:')
+    else:
+        _src_bitrate_input = get_str_raw_bitrate_video_from_keyboard()
+        str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
+    # tmp_for_rebuild_Dec2017
     str_cut_list_file_name = get_str_cut_list_file_name_from_keyboard()
     if str_cut_list_file_name == None:
         pass
