@@ -381,7 +381,8 @@ def make_cmd_array_for_other(_start_timestamp,_duration):
         '-pix_fmt','yuv420p']
     return(_cmd_array)
 
-def make_list_for_cmd_array(_start_timestamp,
+def make_list_for_cmd_array(_str_codec_video,
+                            _start_timestamp,
                             _duration,
                             _dst_video_file,
                             _bool_make_2d_l_from_top,
@@ -389,7 +390,7 @@ def make_list_for_cmd_array(_start_timestamp,
                             _bool_double_action_3dt2dl,
                             _bool_rewrite_output):
     pass
-    if str_codec_video == 'copy':
+    if _str_codec_video == 'copy':
         pass
         _cmd_array = make_cmd_array_for_copy(_start_timestamp,_duration)
         if _bool_rewrite_output:
@@ -500,13 +501,14 @@ def main():
             pass
             _bool_3dt2dl,_bool_double_3dt2dl = False,False
             _str_bitrate_3dt2dl = None
-        _list_for_cmd_array = make_list_for_cmd_array(str_start_timestamp,
-                                       str_duration,
-                                       str_dst_video_file,
-                                       _bool_3dt2dl,
-                                       _str_bitrate_3dt2dl,
-                                       _bool_double_3dt2dl,
-                                       _bool_rewrite_output)
+        _list_for_cmd_array = make_list_for_cmd_array(str_codec_video,
+                                                      str_start_timestamp,
+                                                      str_duration,
+                                                      str_dst_video_file,
+                                                      _bool_3dt2dl,
+                                                      _str_bitrate_3dt2dl,
+                                                      _bool_double_3dt2dl,
+                                                      _bool_rewrite_output)
         for _cmd_array in _list_for_cmd_array:
             pass
             print(_cmd_array)
@@ -538,13 +540,14 @@ def main():
                                                  str_end_stimestamp)
                 str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
                                                              str_end_stimestamp)
-                _list_for_cmd_array = make_list_for_cmd_array(str_start_timestamp,
-                                               str_duration,
-                                               str_dst_video_file,
-                                               _bool_3dt2dl,
-                                               _str_bitrate_3dt2dl,
-                                               _bool_double_3dt2dl,
-                                               _bool_rewrite_output)
+                _list_for_cmd_array = make_list_for_cmd_array(str_codec_video,
+                                                              str_start_timestamp,
+                                                              str_duration,
+                                                              str_dst_video_file,
+                                                              _bool_3dt2dl,
+                                                              _str_bitrate_3dt2dl,
+                                                              _bool_double_3dt2dl,
+                                                              _bool_rewrite_output)
                 for _cmd_array in _list_for_cmd_array:
                     pass
                     print(_cmd_array)
