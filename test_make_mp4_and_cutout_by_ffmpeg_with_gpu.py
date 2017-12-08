@@ -113,8 +113,32 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                                                  'libx264',
                                                  '100M',
                                                  '60'))
-    def make_list_for_cmd_array(self):
-        pass
+    def test_make_list_for_cmd_array(self):
+        _dict_input = {'_src_video_name_input':'/path/file.ext',
+                       '_bool_video_deinterlace':False,
+                       '_str_codec_video':'copy',
+                       '_str_bitrate':'100M',
+                       '_start_timestamp':'00:00:00',
+                       '_duration':'60',
+                       '_dst_video_file':'/path/file.ext_00_00_00_to_00_01_00',
+                       '_bool_make_2d_l_from_top':False,
+                       '_str_bitrate_3dt2dl':None,
+                       '_bool_double_action_3dt2dl':False,
+                       '_bool_rewrite_output':False}
+        self.assertEqual([['ffmpeg','-ss','00:00:00','-i','/path/file.ext','-c','copy','-t','60','/path/file.ext_00_00_00_to_00_01_00.ext']],
+             make_list_for_cmd_array(_dict_input['_src_video_name_input'],
+                 _dict_input['_bool_video_deinterlace'],
+                 _dict_input['_str_codec_video'],
+                 _dict_input['_str_bitrate'],
+                 #_dict_input['_start_timestamp'],
+                 '00:00:00',
+                 #_dict_input['_duration'],
+                 '60',
+                 _dict_input['_dst_video_file'],
+                 _dict_input['_bool_make_2d_l_from_top'],
+                 _dict_input['_str_bitrate_3dt2dl'],
+                 _dict_input['_bool_double_action_3dt2dl'],
+                 _dict_input['_bool_rewrite_output']))
 
 
 if __name__ == '__main__':
