@@ -73,7 +73,6 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         self.assertEqual('60',make_str_duration('00:00:00','00:01:00'))
         self.assertEqual('60',make_str_duration('01:01:53','01:02:53'))
     def test_make_str_dst_video_file(self):
-        pass
         self.assertEqual('/path%sfile.ext_00_00_00_to_00_00_60' % path_split_by,
                          make_str_dst_video_file('00:00:00',
                                                  '00:00:60',
@@ -89,7 +88,6 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         self.assertEqual(['-vf', 'crop=iw:(ih/2):0:0,scale=iw:(ih*2)'],
                          make_array_vf(False,True))
     def test_make_cmd_array_for_copy(self):
-        pass
         self.assertEqual(['%s' % ffmpeg_name,
                           '-ss','00:00:00',
                           '-i','/path/file.ext',
@@ -99,8 +97,22 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                                                  '/path/file.ext',
                                                  'copy',
                                                  '60'))
-    def make_cmd_array_for_other(self):
-        pass
+    def test_make_cmd_array_for_other(self):
+        self.assertEqual(['%s' % ffmpeg_name,
+                          '-ss','00:00:00',
+                          '-i','/path/file.ext',
+                          '-c:v','libx264',
+                          '-map','0:v',
+                          '-ac','2',
+                          '-map','0:a',
+                          '-b:v','100M',
+                          '-t','60',
+                          '-pix_fmt','yuv420p'],
+                         make_cmd_array_for_other('00:00:00',
+                                                 '/path/file.ext',
+                                                 'libx264',
+                                                 '100M',
+                                                 '60'))
     def make_list_for_cmd_array(self):
         pass
 
