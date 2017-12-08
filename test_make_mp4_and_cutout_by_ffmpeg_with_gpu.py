@@ -88,9 +88,17 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                          make_array_vf(True,False))
         self.assertEqual(['-vf', 'crop=iw:(ih/2):0:0,scale=iw:(ih*2)'],
                          make_array_vf(False,True))
-    def make_cmd_array_for_copy(self):
+    def test_make_cmd_array_for_copy(self):
         pass
-        #self.assertEqual(None,make_cmd_array_for_copy('00:00:00','00:01:00'))
+        self.assertEqual(['%s' % ffmpeg_name,
+                          '-ss','00:00:00',
+                          '-i','/path/file.ext',
+                          '-c','copy',
+                          '-t','60'],
+                         make_cmd_array_for_copy('00:00:00',
+                                                 '/path/file.ext',
+                                                 'copy',
+                                                 '60'))
     def make_cmd_array_for_other(self):
         pass
     def make_list_for_cmd_array(self):
