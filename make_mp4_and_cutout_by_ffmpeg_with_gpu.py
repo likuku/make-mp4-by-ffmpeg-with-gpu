@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Dec6,2017
+last update on Dec11,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -402,14 +402,17 @@ def make_list_for_cmd_array(_src_video_name_input,
     pass
     if _str_codec_video == 'copy':
         pass
-        _cmd_array = make_cmd_array_for_copy(_start_timestamp,_duration)
+        _cmd_array = make_cmd_array_for_copy(_start_timestamp,
+                                    _src_video_name_input,
+                                    _str_codec_video,
+                                    _duration)
         if _bool_rewrite_output:
             pass
             _cmd_array = _cmd_array + ['-y']
         else:
             pass
         _cmd_array = _cmd_array + ['%s.%s' % (_dst_video_file,
-                       (src_video_file_name.rsplit('.',1)[1]))]
+                       (_src_video_name_input.rsplit('.',1)[1]))]
         _list_for_cmd_array = []
         _list_for_cmd_array.append(_cmd_array)
     else:
