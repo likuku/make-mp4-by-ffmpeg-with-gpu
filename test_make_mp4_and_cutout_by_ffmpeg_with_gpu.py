@@ -176,7 +176,34 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_double_action_3dt2dl'],
                  _dict_input['_bool_rewrite_output']))
         pass
-
+        # h264_nvenc,deinterlace,100M,60sec,no2d,noOverWriter
+        _dict_input['_str_codec_video'] = 'h264_nvenc'
+        _dict_input['_str_bitrate'] = '100M'
+        _dict_input['_bool_video_deinterlace'] = True
+        self.assertEqual([['ffmpeg',
+                           '-ss','00:00:00',
+                           '-i','/path/file.ext',
+                           '-c:v','h264_nvenc',
+                           '-map','0:v',
+                           '-ac','2',
+                           '-map','0:a',
+                           '-b:v','100M',
+                           '-t','60',
+                           '-pix_fmt','yuv420p',
+                           '-vf','yadif=1',
+                           '/path/file.ext_00_00_00_to_00_01_00.mp4']],
+             make_list_for_cmd_array(_dict_input['_src_video_name_input'],
+                 _dict_input['_bool_video_deinterlace'],
+                 _dict_input['_str_codec_video'],
+                 _dict_input['_str_bitrate'],
+                 _dict_input['_start_timestamp'],
+                 _dict_input['_duration'],
+                 _dict_input['_dst_video_file'],
+                 _dict_input['_bool_make_2d_l_from_top'],
+                 _dict_input['_str_bitrate_3dt2dl'],
+                 _dict_input['_bool_double_action_3dt2dl'],
+                 _dict_input['_bool_rewrite_output']))
+        pass
 
 if __name__ == '__main__':
     unittest.main()
