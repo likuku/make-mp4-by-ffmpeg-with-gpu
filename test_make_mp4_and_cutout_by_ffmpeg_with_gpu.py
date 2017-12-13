@@ -132,6 +132,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                        '_bool_double_action_3dt2dl':False,
                        '_bool_rewrite_output':False}
         pass
+        # copy,60sec
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -192,6 +193,39 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                            '-pix_fmt','yuv420p',
                            '-vf','yadif=1',
                            '/path/file.ext_00_00_00_to_00_01_00.mp4']],
+             make_list_for_cmd_array(_dict_input['_src_video_name_input'],
+                 _dict_input['_bool_video_deinterlace'],
+                 _dict_input['_str_codec_video'],
+                 _dict_input['_str_bitrate'],
+                 _dict_input['_start_timestamp'],
+                 _dict_input['_duration'],
+                 _dict_input['_dst_video_file'],
+                 _dict_input['_bool_make_2d_l_from_top'],
+                 _dict_input['_str_bitrate_3dt2dl'],
+                 _dict_input['_bool_double_action_3dt2dl'],
+                 _dict_input['_bool_rewrite_output']))
+        pass
+        # h264_nvenc,deinterlace,100M,60sec,3tb2d,40M,solo,noOverWriter
+        _dict_input['_str_codec_video'] = 'h264_nvenc'
+        _dict_input['_str_bitrate'] = '100M'
+        _dict_input['_bool_video_deinterlace'] = True
+        _dict_input['_bool_make_2d_l_from_top'] = True
+        _dict_input['_str_bitrate_3dt2dl'] = '40M'
+        _dict_input['_bool_double_action_3dt2dl'] = False
+        _dict_input['_bool_rewrite_output'] = False
+        self.assertEqual([['ffmpeg',
+                           '-ss','00:00:00',
+                           '-i','/path/file.ext',
+                           '-c:v','h264_nvenc',
+                           '-map','0:v',
+                           '-ac','2',
+                           '-map','0:a',
+                           '-b:v','40M',
+                           '-t','60',
+                           '-pix_fmt','yuv420p',
+                           '-aspect','16:9',
+                           '-vf','yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)',
+                           '/path/file.ext_00_00_00_to_00_01_00_3DTop2Left_2D.mp4']],
              make_list_for_cmd_array(_dict_input['_src_video_name_input'],
                  _dict_input['_bool_video_deinterlace'],
                  _dict_input['_str_codec_video'],
