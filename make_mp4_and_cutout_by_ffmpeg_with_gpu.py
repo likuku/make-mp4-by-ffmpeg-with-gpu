@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Dec11,2017
+last update on Dec14,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -434,7 +434,7 @@ def make_list_for_cmd_array(_src_video_name_input,
             if _bool_double_action_3dt2dl:
                 pass
                 _list_for_cmd_array = []
-                if src_codec_video_deinterlace_input:
+                if _bool_double_action_3dt2dl:
                     pass
                     _list_for_cmd_array.append(_cmd_array + ['-vf','yadif=1','%s.mp4' % _dst_video_file])
                 else:
