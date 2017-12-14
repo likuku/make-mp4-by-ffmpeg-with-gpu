@@ -488,8 +488,12 @@ def main():
     # tmp_for_rebuild_Dec2017
     if str_codec_video == 'copy':
         pass
+        str_bitrate = None
+        bool_video_deinterlace = None
         print('已选择纯剪切不编码的 copy 模式:')
     else:
+        #_tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
+        #bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
         _src_bitrate_input = get_str_raw_bitrate_video_from_keyboard()
         str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
     # tmp_for_rebuild_Dec2017
