@@ -144,7 +144,7 @@ def check_and_rebuild_str_codec_video(_str_input):
 
 def get_str_raw_bitrate_video_from_keyboard():
     pass
-    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec : '
+    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 80MBits/sec : '
     _str_raw_input = str(input(_str_input_msg))
     return(_str_raw_input)
 
@@ -152,7 +152,7 @@ def check_and_rebuild_str_bitrate_video(_str_input):
     pass
     if len(_str_input) == 0:
         pass
-        _str_bitrate = '100M'
+        _str_bitrate = '80M'
     else:
         _str_bitrate = '%sM' % _str_input
     return(_str_bitrate)
@@ -225,11 +225,11 @@ def get_bool_make_2d_l_from_top_from_keyboard():
 def get_str_bitrate_make_2d_l_from_top_from_keyboard():
     pass
     print('设定 3DTop2Left_2D 视频码率: ')
-    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec : '
+    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 40MBits/sec : '
     _src_bitrate_input = str(input(_str_input_msg))
     if len(_src_bitrate_input) == 0:
         pass
-        _str_bitrate = '100M'
+        _str_bitrate = '40M'
     else:
         _str_bitrate = '%sM' % _src_bitrate_input
     return(_str_bitrate)

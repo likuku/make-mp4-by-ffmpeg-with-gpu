@@ -43,7 +43,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                          check_and_rebuild_str_codec_video('5'))
 
     def test_check_and_rebuild_str_bitrate_video(self):
-        self.assertEqual('100M',
+        self.assertEqual('80M',
                          check_and_rebuild_str_bitrate_video(''))
         self.assertEqual('10M',
                          check_and_rebuild_str_bitrate_video('10'))
