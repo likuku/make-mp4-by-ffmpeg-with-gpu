@@ -489,7 +489,7 @@ def main():
     if str_codec_video == 'copy':
         pass
         str_bitrate = None
-        bool_video_deinterlace = None
+        bool_video_deinterlace = False
         print('已选择纯剪切不编码的 copy 模式:')
     else:
         #_tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
