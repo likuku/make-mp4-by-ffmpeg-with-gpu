@@ -434,7 +434,7 @@ def make_list_for_cmd_array(_src_video_name_input,
             if _bool_double_action_3dt2dl:
                 pass
                 _list_for_cmd_array = []
-                if _bool_double_action_3dt2dl:
+                if _bool_video_deinterlace:
                     pass
                     _list_for_cmd_array.append(_cmd_array + ['-vf','yadif=1','%s.mp4' % _dst_video_file])
                 else:
