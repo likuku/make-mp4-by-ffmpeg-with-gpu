@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Dec14,2017
+last update on Dec15,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -563,8 +563,13 @@ def main():
                 str_duration = make_str_duration(str_start_timestamp,
                                                  str_end_stimestamp)
                 str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
-                                                             str_end_stimestamp)
-                _list_for_cmd_array = make_list_for_cmd_array(str_codec_video,
+                                                             str_end_stimestamp,
+                                                             _src_video_path,
+                                                             _src_video_file_name)
+                _list_for_cmd_array = make_list_for_cmd_array(_src_video_name_input,
+                                                              bool_video_deinterlace,
+                                                              str_codec_video,
+                                                              str_bitrate,
                                                               str_start_timestamp,
                                                               str_duration,
                                                               str_dst_video_file,
