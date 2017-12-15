@@ -131,7 +131,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                        '_bool_make_2d_l_from_top':False,
                        '_str_bitrate_3dt2dl':None,
                        '_bool_double_action_3dt2dl':False,
-                       '_bool_rewrite_output':False}
+                       '_bool_overwrite_output':False}
         pass
         # copy,60sec
         self.assertEqual([['ffmpeg',
@@ -150,13 +150,13 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,deinterlace,100M,60sec,no2d,solo,noOverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
         _dict_input['_str_bitrate'] = '100M'
         _dict_input['_bool_video_deinterlace'] = True
-        _dict_input['_bool_rewrite_output'] = False
+        _dict_input['_bool_overwrite_output'] = False
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -179,13 +179,13 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,deinterlace,100M,60sec,no2d,solo,OverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
         _dict_input['_str_bitrate'] = '100M'
         _dict_input['_bool_video_deinterlace'] = True
-        _dict_input['_bool_rewrite_output'] = True
+        _dict_input['_bool_overwrite_output'] = True
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -209,13 +209,13 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,nodeinterlace,100M,60sec,no2d,solo,noOverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
         _dict_input['_str_bitrate'] = '100M'
         _dict_input['_bool_video_deinterlace'] = False
-        _dict_input['_bool_rewrite_output'] = False
+        _dict_input['_bool_overwrite_output'] = False
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -237,13 +237,13 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,nodeinterlace,100M,60sec,no2d,solo,OverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
         _dict_input['_str_bitrate'] = '100M'
         _dict_input['_bool_video_deinterlace'] = False
-        _dict_input['_bool_rewrite_output'] = True
+        _dict_input['_bool_overwrite_output'] = True
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -266,7 +266,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,nodeinterlace,100M,60sec,3tb2d,40M,solo,noOverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
@@ -275,7 +275,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         _dict_input['_bool_make_2d_l_from_top'] = True
         _dict_input['_str_bitrate_3dt2dl'] = '40M'
         _dict_input['_bool_double_action_3dt2dl'] = False
-        _dict_input['_bool_rewrite_output'] = False
+        _dict_input['_bool_overwrite_output'] = False
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -299,7 +299,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,nodeinterlace,100M,60sec,3tb2d,40M,solo,OverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
@@ -308,7 +308,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         _dict_input['_bool_make_2d_l_from_top'] = True
         _dict_input['_str_bitrate_3dt2dl'] = '40M'
         _dict_input['_bool_double_action_3dt2dl'] = False
-        _dict_input['_bool_rewrite_output'] = True
+        _dict_input['_bool_overwrite_output'] = True
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -333,7 +333,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,deinterlace,100M,60sec,3tb2d,40M,solo,noOverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
@@ -342,7 +342,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         _dict_input['_bool_make_2d_l_from_top'] = True
         _dict_input['_str_bitrate_3dt2dl'] = '40M'
         _dict_input['_bool_double_action_3dt2dl'] = False
-        _dict_input['_bool_rewrite_output'] = False
+        _dict_input['_bool_overwrite_output'] = False
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -366,7 +366,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,deinterlace,100M,60sec,3tb2d,40M,solo,OverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
@@ -375,7 +375,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         _dict_input['_bool_make_2d_l_from_top'] = True
         _dict_input['_str_bitrate_3dt2dl'] = '40M'
         _dict_input['_bool_double_action_3dt2dl'] = False
-        _dict_input['_bool_rewrite_output'] = True
+        _dict_input['_bool_overwrite_output'] = True
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -400,7 +400,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,nodeinterlace,100M,60sec,3tb2d,40M,DoubleAction,noOverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
@@ -409,7 +409,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         _dict_input['_bool_make_2d_l_from_top'] = True
         _dict_input['_str_bitrate_3dt2dl'] = '40M'
         _dict_input['_bool_double_action_3dt2dl'] = True
-        _dict_input['_bool_rewrite_output'] = False
+        _dict_input['_bool_overwrite_output'] = False
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -445,7 +445,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,nodeinterlace,100M,60sec,3tb2d,40M,DoubleAction,OverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
@@ -454,7 +454,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         _dict_input['_bool_make_2d_l_from_top'] = True
         _dict_input['_str_bitrate_3dt2dl'] = '40M'
         _dict_input['_bool_double_action_3dt2dl'] = True
-        _dict_input['_bool_rewrite_output'] = True
+        _dict_input['_bool_overwrite_output'] = True
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -492,7 +492,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,deinterlace,100M,60sec,3tb2d,40M,DoubleAction,noOverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
@@ -501,7 +501,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         _dict_input['_bool_make_2d_l_from_top'] = True
         _dict_input['_str_bitrate_3dt2dl'] = '40M'
         _dict_input['_bool_double_action_3dt2dl'] = True
-        _dict_input['_bool_rewrite_output'] = False
+        _dict_input['_bool_overwrite_output'] = False
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -538,7 +538,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
         # h264_nvenc,deinterlace,100M,60sec,3tb2d,40M,DoubleAction,OverWriter
         _dict_input['_str_codec_video'] = 'h264_nvenc'
@@ -547,7 +547,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         _dict_input['_bool_make_2d_l_from_top'] = True
         _dict_input['_str_bitrate_3dt2dl'] = '40M'
         _dict_input['_bool_double_action_3dt2dl'] = True
-        _dict_input['_bool_rewrite_output'] = True
+        _dict_input['_bool_overwrite_output'] = True
         self.assertEqual([['ffmpeg',
                            '-ss','00:00:00',
                            '-i','/path/file.ext',
@@ -586,7 +586,7 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  _dict_input['_bool_make_2d_l_from_top'],
                  _dict_input['_str_bitrate_3dt2dl'],
                  _dict_input['_bool_double_action_3dt2dl'],
-                 _dict_input['_bool_rewrite_output']))
+                 _dict_input['_bool_overwrite_output']))
         pass
 
 
