@@ -54,28 +54,7 @@ def rebuild_list_str_src_media_path(_str_input,_path_split_by):
     _str_src_input = _str_input.replace('"','').strip()
     # 路径里包含空格，则拖拽文件时，windows 会自动给首尾加一对双引号，subprocess 不需要
     _list_src_media_path_file = _str_src_input.rsplit(_path_split_by,1)
-    #src_video_file_name = _list_src_media_path_file[1]
-    #src_video_path = _list_src_media_path_file[0]
     return(_list_src_media_path_file)
-
-# tmp_for_rebuild_Dec2017
-'''
-_tmp_src_media_path = get_str_raw_src_media_path_from_keyboard()
-if check_str_raw_src_media_path(_tmp_src_media_path):
-    pass
-    _tmp_src_media_path_list = rebuild_list_str_src_media_path(_tmp_src_media_path,
-                                                               path_split_by)
-    src_video_file_name = _tmp_src_media_path_list[1]
-    src_video_path = _tmp_src_media_path_list[0]
-    src_video_name_input = '%s%s%s' % (src_video_path,
-                                       path_split_by,
-                                       src_video_file_name)
-else:
-    print('素材文件无法访问，再次运行后,重新输入')
-    time.sleep(2)
-    exit()
-'''
-# tmp_for_rebuild_Dec2017
 
 def get_str_raw_deinterlace_from_keyboard():
     pass
@@ -97,13 +76,6 @@ def rebuild_bool_deinterlace(_str_input):
         exit()
     return(_bool_deinterlace_input)
 
-# tmp_for_rebuild_Dec2017
-'''
-_tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
-src_codec_video_deinterlace_input = rebuild_bool_deinterlace(_tmp_deinterlace)
-'''
-# tmp_for_rebuild_Dec2017
-
 def show_dict_codec_video(_dict_input):
     pass
     print('视频编码器列表:')
@@ -115,13 +87,6 @@ def get_str_raw_codec_video_from_keyboard():
     _str_input_msg = ' 请输入视频编码器 序号(直接回车即选 [0]): '
     _str_raw_input = str(input(_str_input_msg))
     return(_str_raw_input)
-
-# tmp_for_rebuild_Dec2017
-'''
-show_dict_codec_video(dict_codec_video)
-src_codec_video_input = get_str_raw_codec_video_from_keyboard()
-'''
-# tmp_for_rebuild_Dec2017
 
 def check_and_rebuild_str_codec_video(_str_input):
     pass
@@ -138,10 +103,6 @@ def check_and_rebuild_str_codec_video(_str_input):
             time.sleep(2)
             exit()
 
-# tmp_for_rebuild_Dec2017
-#str_codec_video = check_and_rebuild_str_codec_video(src_codec_video_input)
-# tmp_for_rebuild_Dec2017
-
 def get_str_raw_bitrate_video_from_keyboard():
     pass
     _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 80MBits/sec : '
@@ -156,17 +117,6 @@ def check_and_rebuild_str_bitrate_video(_str_input):
     else:
         _str_bitrate = '%sM' % _str_input
     return(_str_bitrate)
-
-# tmp_for_rebuild_Dec2017
-'''
-if str_codec_video == 'copy':
-    pass
-    print('已选择纯剪切不编码的 copy 模式:')
-else:
-    _src_bitrate_input = get_str_raw_bitrate_video_from_keyboard()
-    str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
-'''
-# tmp_for_rebuild_Dec2017
 
 def get_str_cut_list_file_name_from_keyboard():
     pass
@@ -458,7 +408,6 @@ def make_list_for_cmd_array(_src_video_name_input,
 
 def main():
     pass
-    # tmp_for_rebuild_Dec2017
     _tmp_src_media_path = get_str_raw_src_media_path_from_keyboard()
     if check_str_raw_src_media_path(_tmp_src_media_path):
         pass
@@ -473,19 +422,11 @@ def main():
         print('素材文件无法访问，再次运行后,重新输入')
         time.sleep(2)
         exit()
-    # tmp_for_rebuild_Dec2017
-    # tmp_for_rebuild_Dec2017
     _tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
     bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
-    # tmp_for_rebuild_Dec2017
-    # tmp_for_rebuild_Dec2017
     show_dict_codec_video(dict_codec_video)
     src_codec_video_input = get_str_raw_codec_video_from_keyboard()
-    # tmp_for_rebuild_Dec2017
-    # tmp_for_rebuild_Dec2017
     str_codec_video = check_and_rebuild_str_codec_video(src_codec_video_input)
-    # tmp_for_rebuild_Dec2017
-    # tmp_for_rebuild_Dec2017
     if str_codec_video == 'copy':
         pass
         str_bitrate = None
@@ -496,7 +437,6 @@ def main():
         #bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
         _src_bitrate_input = get_str_raw_bitrate_video_from_keyboard()
         str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
-    # tmp_for_rebuild_Dec2017
     str_cut_list_file_name = get_str_cut_list_file_name_from_keyboard()
     if str_cut_list_file_name == None:
         pass
