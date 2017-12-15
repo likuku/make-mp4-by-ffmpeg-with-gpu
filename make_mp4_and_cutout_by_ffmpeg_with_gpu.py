@@ -422,8 +422,6 @@ def main():
         print('素材文件无法访问，再次运行后,重新输入')
         time.sleep(2)
         exit()
-    _tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
-    bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
     show_dict_codec_video(dict_codec_video)
     src_codec_video_input = get_str_raw_codec_video_from_keyboard()
     str_codec_video = check_and_rebuild_str_codec_video(src_codec_video_input)
@@ -433,8 +431,8 @@ def main():
         bool_video_deinterlace = False
         print('已选择纯剪切不编码的 copy 模式:')
     else:
-        #_tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
-        #bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
+        _tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
+        bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
         _src_bitrate_input = get_str_raw_bitrate_video_from_keyboard()
         str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
     str_cut_list_file_name = get_str_cut_list_file_name_from_keyboard()
