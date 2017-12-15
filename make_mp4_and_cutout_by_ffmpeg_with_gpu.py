@@ -135,7 +135,7 @@ def get_str_cut_list_file_name_from_keyboard():
         _src_cut_list_input = None
     return(_src_cut_list_input)
 
-def get_bool_rewrite_output_from_keyboard():
+def get_bool_overwrite_output_from_keyboard():
     pass
     print('当输出文件已存在时，是否直接覆盖同名文件:')
     _str_input_msg = ' 1[是]? 0[否]? 直接回车则默认为 0[否]:'
@@ -349,7 +349,7 @@ def make_list_for_cmd_array(_src_video_name_input,
                             _bool_make_2d_l_from_top,
                             _str_bitrate_3dt2dl,
                             _bool_double_action_3dt2dl,
-                            _bool_rewrite_output):
+                            _bool_overwrite_output):
     pass
     if _str_codec_video == 'copy':
         pass
@@ -357,7 +357,7 @@ def make_list_for_cmd_array(_src_video_name_input,
                                     _src_video_name_input,
                                     _str_codec_video,
                                     _duration)
-        if _bool_rewrite_output:
+        if _bool_overwrite_output:
             pass
             _cmd_array = _cmd_array + ['-y']
         else:
@@ -372,7 +372,7 @@ def make_list_for_cmd_array(_src_video_name_input,
                                               _str_codec_video,
                                               _str_bitrate,
                                               _duration)
-        if _bool_rewrite_output:
+        if _bool_overwrite_output:
             pass
             _cmd_array = _cmd_array + ['-y']
         else:
@@ -439,7 +439,7 @@ def main():
     str_cut_list_file_name = get_str_cut_list_file_name_from_keyboard()
     if str_cut_list_file_name == None:
         pass
-        _bool_rewrite_output = False
+        _bool_overwrite_output = False
         str_start_timestamp = get_str_start_timestamp_from_keyboard()
         str_end_stimestamp = get_str_end_timestamp_from_keyboard()
         str_duration = make_str_duration(str_start_timestamp,
@@ -471,7 +471,7 @@ def main():
                                                       _bool_3dt2dl,
                                                       _str_bitrate_3dt2dl,
                                                       _bool_double_3dt2dl,
-                                                      _bool_rewrite_output)
+                                                      _bool_overwrite_output)
         for _cmd_array in _list_for_cmd_array:
             pass
             print(_cmd_array)
@@ -480,7 +480,7 @@ def main():
         pass
     else:
         pass
-        _bool_rewrite_output = get_bool_rewrite_output_from_keyboard()
+        _bool_overwrite_output = get_bool_overwrite_output_from_keyboard()
         if str_codec_video != 'copy':
             _bool_3dt2dl = get_bool_make_2d_l_from_top_from_keyboard()
             if _bool_3dt2dl:
@@ -515,7 +515,7 @@ def main():
                                                               _bool_3dt2dl,
                                                               _str_bitrate_3dt2dl,
                                                               _bool_double_3dt2dl,
-                                                              _bool_rewrite_output)
+                                                              _bool_overwrite_output)
                 for _cmd_array in _list_for_cmd_array:
                     pass
                     print(_cmd_array)
