@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Dec3,2017
+last update on Dec15,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -23,68 +23,101 @@ else:
     path_split_by = '/'
     ffmpeg_name = 'ffmpeg'
 
-print('版本: v1.5.11 20171203')
-print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等')
-print('推荐使用 FFmpeg v3.3.x 版本，原因:')
-print('FFmpeg v3.4 版本在 macOS 转码后打包文件时极机率会僵死无法完成','\n')
-print('请输入素材文件路径 : ' )
-src_video_name_input = input().replace('"','').strip()
-# 路径里包含空格，则拖拽文件时，windows 会自动给首尾加一对双引号，subprocess 不需要
-src_video_name_input_list = src_video_name_input.rsplit(path_split_by,1)
-src_video_file_name = src_video_name_input_list[1]
-src_video_path = src_video_name_input_list[0]
-
-print('反交错滤镜 -fv yadif=1，消除隔行扫描/如1080i素材画面的锯齿/百叶窗条纹')
-_str_input_msg = ' 是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]: '
-src_codec_video_deinterlace_input = str(input(_str_input_msg))
-if len(src_codec_video_deinterlace_input) == 0:
-    pass
-    src_codec_video_deinterlace_input = False
-elif src_codec_video_deinterlace_input == '0':
-    src_codec_video_deinterlace_input = False
-elif src_codec_video_deinterlace_input == '1':
-    src_codec_video_deinterlace_input = True
-else:
-    print ('Error: 再次运行后,重新输入正确的选项代号')
-    time.sleep(2)
-    exit()
-
-_dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
+dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
                    '1':['libx264','H.264 with CPU'],
                    '2':['hevc_nvenc','H.265 with Nvidia GPU'],
                    '3':['libx265','H.265 with CPU'],
                    '4':['h264_videotoolbox','H.265 with GPU on macOS'],
                    '5':['copy','Copy data from Source,the Fastest']}
 
-print('视频编码器列表:')
-for _i in sorted(_dict_codec_video.keys()):
-    print(' %s. %s: %s' % (_i,_dict_codec_video[_i][0],_dict_codec_video[_i][1]))
-_str_input_msg = ' 请输入视频编码器 序号(直接回车即选 [0]): '
-_src_codec_video_input = str(input(_str_input_msg))
+print('版本: v1.6.0 20171215')
+print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等')
+print('推荐使用 FFmpeg v3.3.x 版本，原因:')
+print('FFmpeg v3.4 版本在 macOS 转码后打包文件时极机率会僵死无法完成','\n')
 
-try:
+def get_str_raw_src_media_path_from_keyboard():
     pass
-    if len(_src_codec_video_input) == 0:
+    _str_input_msg = '请输入素材文件路径 : '
+    _str_raw_input = str(input(_str_input_msg))
+    return(_str_raw_input)
+
+def check_str_raw_src_media_path(_str_input):
+    pass
+    if _str_input == 0:
         pass
-        str_codec_video = _dict_codec_video['0'][0]
+        _bool_src_media_path = False
     else:
-        str_codec_video = _dict_codec_video[_src_codec_video_input][0]
-except Exception as e:
+        _bool_src_media_path = os.access(_str_input,os.F_OK)
+    return(_bool_src_media_path)
+
+def rebuild_list_str_src_media_path(_str_input,_path_split_by):
+    pass
+    _str_src_input = _str_input.replace('"','').strip()
+    # 路径里包含空格，则拖拽文件时，windows 会自动给首尾加一对双引号，subprocess 不需要
+    _list_src_media_path_file = _str_src_input.rsplit(_path_split_by,1)
+    return(_list_src_media_path_file)
+
+def get_str_raw_deinterlace_from_keyboard():
+    pass
+    print('反交错滤镜 -fv yadif=1，消除隔行扫描/如1080i素材画面的锯齿/百叶窗条纹')
+    _str_input_msg = ' 是否开启反交错处理 1[是]? 0[否]? 直接回车则默认为 0[否]: '
+    _str_raw_input = str(input(_str_input_msg))
+    return(_str_raw_input)
+
+def rebuild_bool_deinterlace(_str_input):
+    pass
+    if len(_str_input) == 0 or _str_input == '0':
+        pass
+        _bool_deinterlace_input = False
+    elif _str_input == '1':
+        _bool_deinterlace_input = True
+    else:
         print ('Error: 再次运行后,重新输入正确的选项代号')
         time.sleep(2)
         exit()
+    return(_bool_deinterlace_input)
 
-if str_codec_video == 'copy':
+def show_dict_codec_video(_dict_input):
     pass
-    print('已选择纯剪切不编码的 copy 模式:')
-else:
-    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec : '
-    _src_bitrate_input = str(input(_str_input_msg))
-    if len(_src_bitrate_input) == 0:
+    print('视频编码器列表:')
+    for _i in sorted(dict_codec_video.keys()):
+        print(' %s. %s: %s' % (_i,dict_codec_video[_i][0],dict_codec_video[_i][1]))
+
+def get_str_raw_codec_video_from_keyboard():
+    pass
+    _str_input_msg = ' 请输入视频编码器 序号(直接回车即选 [0]): '
+    _str_raw_input = str(input(_str_input_msg))
+    return(_str_raw_input)
+
+def check_and_rebuild_str_codec_video(_str_input):
+    pass
+    try:
         pass
-        str_bitrate = '100M'
+        if len(_str_input) == 0:
+            pass
+            _str_codec_video = dict_codec_video['0'][0]
+        else:
+            _str_codec_video = dict_codec_video[_str_input][0]
+        return(_str_codec_video)
+    except Exception as e:
+            print ('Error: 再次运行后,重新输入正确的选项代号')
+            time.sleep(2)
+            exit()
+
+def get_str_raw_bitrate_video_from_keyboard():
+    pass
+    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 80MBits/sec : '
+    _str_raw_input = str(input(_str_input_msg))
+    return(_str_raw_input)
+
+def check_and_rebuild_str_bitrate_video(_str_input):
+    pass
+    if len(_str_input) == 0:
+        pass
+        _str_bitrate = '80M'
     else:
-        str_bitrate = '%sM' % _src_bitrate_input
+        _str_bitrate = '%sM' % _str_input
+    return(_str_bitrate)
 
 def get_str_cut_list_file_name_from_keyboard():
     pass
@@ -143,11 +176,11 @@ def get_bool_make_2d_l_from_top_from_keyboard():
 def get_str_bitrate_make_2d_l_from_top_from_keyboard():
     pass
     print('设定 3DTop2Left_2D 视频码率: ')
-    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 100MBits/sec : '
+    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 40MBits/sec : '
     _src_bitrate_input = str(input(_str_input_msg))
     if len(_src_bitrate_input) == 0:
         pass
-        _str_bitrate = '100M'
+        _str_bitrate = '40M'
     else:
         _str_bitrate = '%sM' % _src_bitrate_input
     return(_str_bitrate)
@@ -236,17 +269,20 @@ def make_str_duration(_start_timestamp,_end_stimestamp):
         _duration = str(int((_time_to - _time_ss).total_seconds()))
     return(_duration)
 
-def make_str_dst_video_file(_start_timestamp,_end_stimestamp):
+def make_str_dst_video_file(_start_timestamp,
+                            _end_stimestamp,
+                            _src_video_path,
+                            _src_video_file_name):
     pass
     if _end_stimestamp == None:
         pass
-        _dst_video_file_name = '%s_%s_to_end'% (src_video_file_name,
+        _dst_video_file_name = '%s_%s_to_end'% (_src_video_file_name,
             _start_timestamp.replace(':','_'))
     else:
-        _dst_video_file_name = '%s_%s_to_%s'% (src_video_file_name,
+        _dst_video_file_name = '%s_%s_to_%s'% (_src_video_file_name,
             _start_timestamp.replace(':','_'),
             _end_stimestamp.replace(':','_'))
-    _dst_video_file = '%s%s%s' % (src_video_path,
+    _dst_video_file = '%s%s%s' % (_src_video_path,
                                   path_split_by,
                                   _dst_video_file_name)
     return(_dst_video_file)
@@ -273,30 +309,41 @@ def make_array_vf(src_codec_video_deinterlace_input,
         pass
     return(_array_vf)
 
-def make_cmd_array_for_copy(_start_timestamp,_duration):
+def make_cmd_array_for_copy(_start_timestamp,
+                            _src_video_name_input,
+                            _str_codec_video,
+                            _duration):
     pass
     _cmd_array = ['%s' % ffmpeg_name,
         '-ss','%s' % _start_timestamp,
-        '-i','%s' % src_video_name_input,
-        '-c','%s' % str_codec_video,
+        '-i','%s' % _src_video_name_input,
+        '-c','%s' % _str_codec_video,
         '-t','%s' % _duration]
     return(_cmd_array)
 
-def make_cmd_array_for_other(_start_timestamp,_duration):
+def make_cmd_array_for_other(_start_timestamp,
+                             _src_video_name_input,
+                             _str_codec_video,
+                             _str_bitrate,
+                             _duration):
     pass
     _cmd_array = ['%s' % ffmpeg_name,
         '-ss','%s' % _start_timestamp,
-        '-i','%s' % src_video_name_input,
-        '-c:v','%s' % str_codec_video,
+        '-i','%s' % _src_video_name_input,
+        '-c:v','%s' % _str_codec_video,
         '-map','0:v',
         '-ac','2',
         '-map','0:a',
-        '-b:v','%s' % str_bitrate,
+        '-b:v','%s' % _str_bitrate,
         '-t','%s' % _duration,
         '-pix_fmt','yuv420p']
     return(_cmd_array)
 
-def make_list_for_cmd_array(_start_timestamp,
+def make_list_for_cmd_array(_src_video_name_input,
+                            _bool_video_deinterlace,
+                            _str_codec_video,
+                            _str_bitrate,
+                            _start_timestamp,
                             _duration,
                             _dst_video_file,
                             _bool_make_2d_l_from_top,
@@ -304,26 +351,33 @@ def make_list_for_cmd_array(_start_timestamp,
                             _bool_double_action_3dt2dl,
                             _bool_rewrite_output):
     pass
-    if str_codec_video == 'copy':
+    if _str_codec_video == 'copy':
         pass
-        _cmd_array = make_cmd_array_for_copy(_start_timestamp,_duration)
+        _cmd_array = make_cmd_array_for_copy(_start_timestamp,
+                                    _src_video_name_input,
+                                    _str_codec_video,
+                                    _duration)
         if _bool_rewrite_output:
             pass
             _cmd_array = _cmd_array + ['-y']
         else:
             pass
         _cmd_array = _cmd_array + ['%s.%s' % (_dst_video_file,
-                       (src_video_file_name.rsplit('.',1)[1]))]
+                       (_src_video_name_input.rsplit('.',1)[1]))]
         _list_for_cmd_array = []
         _list_for_cmd_array.append(_cmd_array)
     else:
-        _cmd_array = make_cmd_array_for_other(_start_timestamp,_duration)
+        _cmd_array = make_cmd_array_for_other(_start_timestamp,
+                                              _src_video_name_input,
+                                              _str_codec_video,
+                                              _str_bitrate,
+                                              _duration)
         if _bool_rewrite_output:
             pass
             _cmd_array = _cmd_array + ['-y']
         else:
             pass
-        _array_vf = make_array_vf(src_codec_video_deinterlace_input,
+        _array_vf = make_array_vf(_bool_video_deinterlace,
                               _bool_make_2d_l_from_top)
         if _bool_make_2d_l_from_top:
             pass
@@ -331,7 +385,7 @@ def make_list_for_cmd_array(_start_timestamp,
             if _bool_double_action_3dt2dl:
                 pass
                 _list_for_cmd_array = []
-                if src_codec_video_deinterlace_input:
+                if _bool_video_deinterlace:
                     pass
                     _list_for_cmd_array.append(_cmd_array + ['-vf','yadif=1','%s.mp4' % _dst_video_file])
                 else:
@@ -340,7 +394,7 @@ def make_list_for_cmd_array(_start_timestamp,
             else:
                 _list_for_cmd_array = []
                 _list_for_cmd_array.append(_cmd_array + _array_vf + ['%s_3DTop2Left_2D.mp4' % _dst_video_file])
-        elif src_codec_video_deinterlace_input:
+        elif _bool_video_deinterlace:
             pass
             _cmd_array = _cmd_array + _array_vf + ['%s.mp4' % _dst_video_file]
             _list_for_cmd_array = []
@@ -355,6 +409,35 @@ def make_list_for_cmd_array(_start_timestamp,
 
 def main():
     pass
+    _tmp_src_media_path = get_str_raw_src_media_path_from_keyboard()
+    if check_str_raw_src_media_path(_tmp_src_media_path):
+        pass
+        _tmp_src_media_path_list = rebuild_list_str_src_media_path(_tmp_src_media_path,
+                                                                   path_split_by)
+        _src_video_file_name = _tmp_src_media_path_list[1]
+        _src_video_path = _tmp_src_media_path_list[0]
+        _src_video_name_input = '%s%s%s' % (_src_video_path,
+                                           path_split_by,
+                                           _src_video_file_name)
+    else:
+        print('素材文件无法访问，再次运行后,重新输入')
+        time.sleep(2)
+        exit()
+    _tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
+    bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
+    show_dict_codec_video(dict_codec_video)
+    src_codec_video_input = get_str_raw_codec_video_from_keyboard()
+    str_codec_video = check_and_rebuild_str_codec_video(src_codec_video_input)
+    if str_codec_video == 'copy':
+        pass
+        str_bitrate = None
+        bool_video_deinterlace = False
+        print('已选择纯剪切不编码的 copy 模式:')
+    else:
+        #_tmp_deinterlace = get_str_raw_deinterlace_from_keyboard()
+        #bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
+        _src_bitrate_input = get_str_raw_bitrate_video_from_keyboard()
+        str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
     str_cut_list_file_name = get_str_cut_list_file_name_from_keyboard()
     if str_cut_list_file_name == None:
         pass
@@ -364,7 +447,9 @@ def main():
         str_duration = make_str_duration(str_start_timestamp,
                                          str_end_stimestamp)
         str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
-                                                     str_end_stimestamp)
+                                                     str_end_stimestamp,
+                                                     _src_video_path,
+                                                     _src_video_file_name)
         if str_codec_video != 'copy':
             _bool_3dt2dl = get_bool_make_2d_l_from_top_from_keyboard()
             if _bool_3dt2dl:
@@ -378,13 +463,17 @@ def main():
             pass
             _bool_3dt2dl,_bool_double_3dt2dl = False,False
             _str_bitrate_3dt2dl = None
-        _list_for_cmd_array = make_list_for_cmd_array(str_start_timestamp,
-                                       str_duration,
-                                       str_dst_video_file,
-                                       _bool_3dt2dl,
-                                       _str_bitrate_3dt2dl,
-                                       _bool_double_3dt2dl,
-                                       _bool_rewrite_output)
+        _list_for_cmd_array = make_list_for_cmd_array(_src_video_name_input,
+                                                      bool_video_deinterlace,
+                                                      str_codec_video,
+                                                      str_bitrate,
+                                                      str_start_timestamp,
+                                                      str_duration,
+                                                      str_dst_video_file,
+                                                      _bool_3dt2dl,
+                                                      _str_bitrate_3dt2dl,
+                                                      _bool_double_3dt2dl,
+                                                      _bool_rewrite_output)
         for _cmd_array in _list_for_cmd_array:
             pass
             print(_cmd_array)
@@ -415,14 +504,20 @@ def main():
                 str_duration = make_str_duration(str_start_timestamp,
                                                  str_end_stimestamp)
                 str_dst_video_file = make_str_dst_video_file(str_start_timestamp,
-                                                             str_end_stimestamp)
-                _list_for_cmd_array = make_list_for_cmd_array(str_start_timestamp,
-                                               str_duration,
-                                               str_dst_video_file,
-                                               _bool_3dt2dl,
-                                               _str_bitrate_3dt2dl,
-                                               _bool_double_3dt2dl,
-                                               _bool_rewrite_output)
+                                                             str_end_stimestamp,
+                                                             _src_video_path,
+                                                             _src_video_file_name)
+                _list_for_cmd_array = make_list_for_cmd_array(_src_video_name_input,
+                                                              bool_video_deinterlace,
+                                                              str_codec_video,
+                                                              str_bitrate,
+                                                              str_start_timestamp,
+                                                              str_duration,
+                                                              str_dst_video_file,
+                                                              _bool_3dt2dl,
+                                                              _str_bitrate_3dt2dl,
+                                                              _bool_double_3dt2dl,
+                                                              _bool_rewrite_output)
                 for _cmd_array in _list_for_cmd_array:
                     pass
                     print(_cmd_array)
