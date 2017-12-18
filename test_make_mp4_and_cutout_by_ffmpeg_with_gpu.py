@@ -9,6 +9,10 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                          check_str_raw_src_media_path('.13123241'))
         self.assertEqual(True,
                          check_str_raw_src_media_path('.'))
+        self.assertEqual(True,
+                         check_str_raw_src_media_path('. '))
+        self.assertEqual(True,
+                         check_str_raw_src_media_path('". "'))
 
     def test_rebuild_list_str_src_media_path(self):
         self.assertEqual(['/path/subPath','file.ext'],
