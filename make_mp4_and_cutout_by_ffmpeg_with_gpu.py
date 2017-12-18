@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Dec15,2017
+last update on Dec18,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -42,11 +42,12 @@ def get_str_raw_src_media_path_from_keyboard():
 
 def check_str_raw_src_media_path(_str_input):
     pass
-    if _str_input == 0:
+    if len(_str_input) == 0:
         pass
         _bool_src_media_path = False
     else:
-        _bool_src_media_path = os.access(_str_input,os.F_OK)
+        _bool_src_media_path = os.access(_str_input.replace('"','').strip(),
+                                         os.F_OK)
     return(_bool_src_media_path)
 
 def rebuild_list_str_src_media_path(_str_input,_path_split_by):
