@@ -30,7 +30,7 @@ dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
                    '4':['h264_videotoolbox','H.265 with GPU on macOS'],
                    '5':['copy','Copy data from Source,the Fastest']}
 
-print('版本: v1.6.2 20171215')
+print('版本: v1.6.3 20171219')
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等')
 print('推荐使用 FFmpeg v3.3.x 版本，原因:')
 print('FFmpeg v3.4 版本在 macOS 转码后打包文件时极机率会僵死无法完成','\n')
