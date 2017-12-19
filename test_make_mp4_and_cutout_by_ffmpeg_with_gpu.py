@@ -9,6 +9,10 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                          check_str_raw_src_media_path('.13123241'))
         self.assertEqual(True,
                          check_str_raw_src_media_path('.'))
+        self.assertEqual(True,
+                         check_str_raw_src_media_path('. '))
+        self.assertEqual(True,
+                         check_str_raw_src_media_path('". "'))
 
     def test_rebuild_list_str_src_media_path(self):
         self.assertEqual(['/path/subPath','file.ext'],
@@ -58,6 +62,19 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
              set_bitrate_for_3Dtop2Dleft_from_list_for_cmd_array(
                  [['yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)','-b:v','100M']],
                  '40M'))
+
+    def test_set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(self):
+        pass
+        self.assertEqual([['-pix_fmt','yuv420p','-aspect','16:9','-vf',
+            'crop=iw:(ih/2):0:0,scale=iw:(ih*2)']],
+             set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(
+                 [['-pix_fmt','yuv420p',
+                 '-vf','crop=iw:(ih/2):0:0,scale=iw:(ih*2)']]))
+        self.assertEqual([['-pix_fmt','yuv420p','-aspect','16:9',
+            '-vf','yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)']],
+             set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(
+                 [['-pix_fmt','yuv420p',
+                 '-vf','yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)']]))
 
     def test_rebuild_str_timestamp_input(self):
         self.assertEqual('01:01:01',
@@ -420,7 +437,6 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                            '-b:v','100M',
                            '-t','60',
                            '-pix_fmt','yuv420p',
-                           '-aspect','16:9',
                            '/path/file.ext_00_00_00_to_00_01_00.mp4'],
                           ['ffmpeg',
                            '-ss','00:00:00',
@@ -466,7 +482,6 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                            '-t','60',
                            '-pix_fmt','yuv420p',
                            '-y',
-                           '-aspect','16:9',
                            '/path/file.ext_00_00_00_to_00_01_00.mp4'],
                           ['ffmpeg',
                            '-ss','00:00:00',
@@ -512,7 +527,6 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                            '-b:v','100M',
                            '-t','60',
                            '-pix_fmt','yuv420p',
-                           '-aspect','16:9',
                            '-vf','yadif=1',
                            '/path/file.ext_00_00_00_to_00_01_00.mp4'],
                           ['ffmpeg',
@@ -559,7 +573,6 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                            '-t','60',
                            '-pix_fmt','yuv420p',
                            '-y',
-                           '-aspect','16:9',
                            '-vf','yadif=1',
                            '/path/file.ext_00_00_00_to_00_01_00.mp4'],
                           ['ffmpeg',

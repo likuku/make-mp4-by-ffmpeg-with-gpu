@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 kuku.li@fanc.co
-last update on Dec15,2017
+last update on Dec19,2017
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -43,11 +43,12 @@ def get_str_raw_src_media_path_from_keyboard():
 
 def check_str_raw_src_media_path(_str_input):
     pass
-    if _str_input == 0:
+    if len(_str_input) == 0:
         pass
         _bool_src_media_path = False
     else:
-        _bool_src_media_path = os.access(_str_input,os.F_OK)
+        _bool_src_media_path = os.access(_str_input.replace('"','').strip(),
+                                         os.F_OK)
     return(_bool_src_media_path)
 
 def rebuild_list_str_src_media_path(_str_input,_path_split_by):
@@ -201,6 +202,20 @@ def set_bitrate_for_3Dtop2Dleft_from_list_for_cmd_array(_list_cmd_array,
                 _list_cmd_array[_index][_cmd_array.index('-b:v')+1] = _str_bitrate
             else:
                 pass
+    return(_list_cmd_array)
+
+def set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(_list_cmd_array):
+    for _index in list(range(len(_list_cmd_array))):
+        if ('crop=iw:(ih/2):0:0,scale=iw:(ih*2)' in
+            _list_cmd_array[_index]
+            or 'yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)' in
+            _list_cmd_array[_index]):
+            pass
+            _cmd_array = _list_cmd_array[_index]
+            _list_cmd_array[_index].insert(_cmd_array.index('-vf'),'-aspect')
+            _list_cmd_array[_index].insert(_cmd_array.index('-vf'),'16:9')
+        else:
+            pass
     return(_list_cmd_array)
 
 def get_bool_double_action_for_3d_2d_from_keyboard():
@@ -381,7 +396,6 @@ def make_list_for_cmd_array(_src_video_name_input,
                               _bool_make_2d_l_from_top)
         if _bool_make_2d_l_from_top:
             pass
-            _cmd_array = _cmd_array + ['-aspect','16:9']
             if _bool_double_action_3dt2dl:
                 pass
                 _list_for_cmd_array = []
@@ -405,6 +419,8 @@ def make_list_for_cmd_array(_src_video_name_input,
             _list_for_cmd_array.append(_cmd_array)
         _list_for_cmd_array = set_bitrate_for_3Dtop2Dleft_from_list_for_cmd_array(
             _list_for_cmd_array,_str_bitrate_3dt2dl)
+        _list_for_cmd_array = set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(
+            _list_for_cmd_array)
     return(_list_for_cmd_array)
 
 def main():
