@@ -63,6 +63,19 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  [['yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)','-b:v','100M']],
                  '40M'))
 
+    def test_set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(self):
+        pass
+        self.assertEqual([['-pix_fmt','yuv420p','-aspect','16:9','-vf',
+            'crop=iw:(ih/2):0:0,scale=iw:(ih*2)']],
+             set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(
+                 [['-pix_fmt','yuv420p',
+                 '-vf','crop=iw:(ih/2):0:0,scale=iw:(ih*2)']]))
+        self.assertEqual([['-pix_fmt','yuv420p','-aspect','16:9',
+            '-vf','yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)']],
+             set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(
+                 [['-pix_fmt','yuv420p',
+                 '-vf','yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)']]))
+
     def test_rebuild_str_timestamp_input(self):
         self.assertEqual('01:01:01',
                          rebuild_str_timestamp_input('01:01:01'))
