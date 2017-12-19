@@ -395,7 +395,6 @@ def make_list_for_cmd_array(_src_video_name_input,
                               _bool_make_2d_l_from_top)
         if _bool_make_2d_l_from_top:
             pass
-            _cmd_array = _cmd_array + ['-aspect','16:9']
             if _bool_double_action_3dt2dl:
                 pass
                 _list_for_cmd_array = []
@@ -419,6 +418,8 @@ def make_list_for_cmd_array(_src_video_name_input,
             _list_for_cmd_array.append(_cmd_array)
         _list_for_cmd_array = set_bitrate_for_3Dtop2Dleft_from_list_for_cmd_array(
             _list_for_cmd_array,_str_bitrate_3dt2dl)
+        _list_for_cmd_array = set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(
+            _list_for_cmd_array)
     return(_list_for_cmd_array)
 
 def main():
