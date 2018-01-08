@@ -431,6 +431,8 @@ def make_list_for_cmd_array(_src_video_name_input,
             _list_for_cmd_array,_str_bitrate_3dt2dl)
         _list_for_cmd_array = set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(
             _list_for_cmd_array)
+        _list_for_cmd_array = set_ar_44100hz_for_nocopy_from_list_for_cmd_array(
+            _list_for_cmd_array)
     return(_list_for_cmd_array)
 
 def main():
