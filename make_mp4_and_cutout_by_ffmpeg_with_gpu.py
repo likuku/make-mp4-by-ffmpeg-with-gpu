@@ -435,7 +435,7 @@ def make_list_for_cmd_array(_src_video_name_input,
             _list_for_cmd_array)
     return(_list_for_cmd_array)
 
-def main():
+def main(_dev_mode):
     pass
     _tmp_src_media_path = get_str_raw_src_media_path_from_keyboard()
     if check_str_raw_src_media_path(_tmp_src_media_path):
@@ -501,10 +501,12 @@ def main():
                                                       _bool_double_3dt2dl,
                                                       _bool_overwrite_output)
         for _cmd_array in _list_for_cmd_array:
-            pass
-            print(_cmd_array)
-            continue
-            subprocess.call(_cmd_array)
+            if _dev_mode is True:
+                print(_cmd_array)
+                continue
+            else:
+                print(_cmd_array)
+                subprocess.call(_cmd_array)
         pass
     else:
         pass
@@ -545,12 +547,15 @@ def main():
                                                               _bool_double_3dt2dl,
                                                               _bool_overwrite_output)
                 for _cmd_array in _list_for_cmd_array:
-                    pass
-                    print(_cmd_array)
-                    continue
-                    subprocess.call(_cmd_array)
+                    if _dev_mode is True:
+                        print(_cmd_array)
+                        continue
+                    else:
+                        print(_cmd_array)
+                        subprocess.call(_cmd_array)
                 pass
 
 
 if __name__ == '__main__':
-    main()
+    _dev_mode = True
+    main(_dev_mode)
