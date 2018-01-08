@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
-kuku.li@fanc.co
-last update on Dec19,2017
+likuku.public@gmail.com
+last update on Jan8,2018
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -214,6 +214,16 @@ def set_aspect_16x9_for_3Dtop2Dleft_from_list_for_cmd_array(_list_cmd_array):
             _cmd_array = _list_cmd_array[_index]
             _list_cmd_array[_index].insert(_cmd_array.index('-vf'),'-aspect')
             _list_cmd_array[_index].insert(_cmd_array.index('-vf'),'16:9')
+        else:
+            pass
+    return(_list_cmd_array)
+
+def set_ar_44100hz_for_nocopy_from_list_for_cmd_array(_list_cmd_array):
+    for _index in list(range(len(_list_cmd_array))):
+        if ('-ac' in _list_cmd_array[_index]):
+            _cmd_array = _list_cmd_array[_index]
+            _list_cmd_array[_index].insert(_cmd_array.index('-ac'),'-ar')
+            _list_cmd_array[_index].insert(_cmd_array.index('-ac'),'44100')
         else:
             pass
     return(_list_cmd_array)
