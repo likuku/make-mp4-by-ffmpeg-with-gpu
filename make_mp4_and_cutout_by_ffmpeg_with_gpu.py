@@ -122,7 +122,7 @@ def check_and_rebuild_str_bitrate_video(_str_input):
 
 def get_str_cut_list_file_name_from_keyboard():
     pass
-    print('''自动文件切片列表范例:
+    print('''自动文件切片列表范例(必须.csv格式/纯文本格式):
           00:00:00,00:07:07
           00:08:01,hh:mm:ss
           hh:mm:ss,hh:mm:ss
