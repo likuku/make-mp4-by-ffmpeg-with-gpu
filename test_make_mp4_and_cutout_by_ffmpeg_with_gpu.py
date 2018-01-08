@@ -76,6 +76,12 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
                  [['-pix_fmt','yuv420p',
                  '-vf','yadif=1,crop=iw:(ih/2):0:0,scale=iw:(ih*2)']]))
 
+    def test_set_ar_44100hz_for_nocopy_from_list_for_cmd_array(self):
+        pass
+        self.assertEqual([['-ar','44100','-ac','2']],
+             set_ar_44100hz_for_nocopy_from_list_for_cmd_array(
+                 [['-ac','2']]))
+
     def test_rebuild_str_timestamp_input(self):
         self.assertEqual('01:01:01',
                          rebuild_str_timestamp_input('01:01:01'))
