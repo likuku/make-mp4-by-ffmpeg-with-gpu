@@ -503,7 +503,7 @@ def main():
         for _cmd_array in _list_for_cmd_array:
             pass
             print(_cmd_array)
-            #continue
+            continue
             subprocess.call(_cmd_array)
         pass
     else:
@@ -547,7 +547,7 @@ def main():
                 for _cmd_array in _list_for_cmd_array:
                     pass
                     print(_cmd_array)
-                    #continue
+                    continue
                     subprocess.call(_cmd_array)
                 pass
 
