@@ -99,11 +99,11 @@ def check_and_rebuild_str_codec_video(_str_input):
             _str_codec_video = dict_codec_video['0'][0]
         else:
             _str_codec_video = dict_codec_video[_str_input][0]
-        return(_str_codec_video)
     except Exception as e:
             print ('Error: 再次运行后,重新输入正确的选项代号')
             time.sleep(2)
             exit()
+    return(_str_codec_video)
 
 def get_str_raw_bitrate_video_from_keyboard():
     pass
