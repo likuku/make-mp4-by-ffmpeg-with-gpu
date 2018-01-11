@@ -107,7 +107,7 @@ def check_and_rebuild_str_codec_video(_str_input):
 
 def get_str_raw_bitrate_video_from_keyboard():
     pass
-    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 80MBits/sec : '
+    _str_input_msg = '请输入视频码率，数字即可，单位为 MBits/sec 默认 80MBits/sec : '
     _str_raw_input = str(input(_str_input_msg))
     return(_str_raw_input)
 
@@ -512,6 +512,12 @@ def main(_dev_mode):
         bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
         _src_bitrate_input = get_str_raw_bitrate_video_from_keyboard()
         str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
+        _bool_audio_delay = get_bool_audio_delay_from_keyboard()
+        if _bool_audio_delay is True:
+            _input_delay_time = get_str_raw_audio_delay_time_ms_from_keyboard()
+            _str_audio_delay_time_ms = check_and_rebuild_str_audio_delay_time_ms(_input_delay_time)
+        else:
+            pass
     str_cut_list_file_name = get_str_cut_list_file_name_from_keyboard()
     if str_cut_list_file_name == None:
         pass # No cut list
@@ -549,6 +555,10 @@ def main(_dev_mode):
                                                       _str_bitrate_3dt2dl,
                                                       _bool_double_3dt2dl,
                                                       _bool_overwrite_output)
+        if _bool_audio_delay is True:
+            _list_for_cmd_array = set_audio_delay_time_ms_for_nocopy_from_list_for_cmd_array(_list_for_cmd_array,_str_audio_delay_time_ms)
+        else:
+            pass
         for _cmd_array in _list_for_cmd_array:
             # exec mission list
             if _dev_mode is True:
@@ -597,6 +607,10 @@ def main(_dev_mode):
                                                               _str_bitrate_3dt2dl,
                                                               _bool_double_3dt2dl,
                                                               _bool_overwrite_output)
+                if _bool_audio_delay is True:
+                    _list_for_cmd_array = set_audio_delay_time_ms_for_nocopy_from_list_for_cmd_array(_list_for_cmd_array,_str_audio_delay_time_ms)
+                else:
+                    pass
                 for _cmd_array in _list_for_cmd_array:
                     # exec mission list
                     if _dev_mode is True:
