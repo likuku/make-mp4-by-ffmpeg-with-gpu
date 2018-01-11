@@ -52,6 +52,12 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         self.assertEqual('10M',
                          check_and_rebuild_str_bitrate_video('10'))
 
+    def test_check_and_rebuild_str_audio_delay_time_ms(self):
+        self.assertEqual('1500',
+                         check_and_rebuild_str_audio_delay_time_ms(''))
+        self.assertEqual('150',
+                         check_and_rebuild_str_audio_delay_time_ms('150'))
+
     def test_set_bitrate_for_3Dtop2Dleft_from_list_for_cmd_array(self):
         self.assertEqual([['crop=iw:(ih/2):0:0,scale=iw:(ih*2)',
                            '-b:v','40M']],
@@ -81,6 +87,12 @@ class Test_make_mp4_and_cutout_by_ffmpeg_with_gpu(unittest.TestCase):
         self.assertEqual([['-ar','44100','-ac','2']],
              set_ar_44100hz_for_nocopy_from_list_for_cmd_array(
                  [['-ac','2']]))
+
+    def test_set_audio_delay_time_ms_for_nocopy_from_list_for_cmd_array(self):
+        pass
+        self.assertEqual([['-af','adelay=1500|1500','-ac','2']],
+             set_audio_delay_time_ms_for_nocopy_from_list_for_cmd_array(
+                 [['-ac','2']],'1500'))
 
     def test_rebuild_str_timestamp_input(self):
         self.assertEqual('01:01:01',

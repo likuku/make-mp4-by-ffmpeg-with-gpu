@@ -1,7 +1,7 @@
 '''
 Copy Right by likuku
 likuku.public@gmail.com
-last update on Jan8,2018
+last update on Jan11,2018
 先决条件:
 安装 ffmpeg-static for windows,给当前用户增加环境变量
 安装 python3 for windows,默认安装 # .py 会与 python 解析器自动关联
@@ -30,7 +30,7 @@ dict_codec_video={'0':['h264_nvenc','H.264 with Nvidia GPU [默认]'],
                    '4':['h264_videotoolbox','H.265 with GPU on macOS'],
                    '5':['copy','Copy data from Source,the Fastest']}
 
-print('版本: v20180108_1921')
+print('版本: v20180111_2344')
 print('请关闭系统里其他占用GPU的程序：3D游戏,3D渲染工具,AdobePR,AdobeMediaEncoder 等')
 print('推荐使用 FFmpeg v3.3.x 版本，原因:')
 print('FFmpeg v3.4 版本在 macOS 转码后打包文件时极机率会僵死无法完成','\n')
@@ -99,15 +99,15 @@ def check_and_rebuild_str_codec_video(_str_input):
             _str_codec_video = dict_codec_video['0'][0]
         else:
             _str_codec_video = dict_codec_video[_str_input][0]
-        return(_str_codec_video)
     except Exception as e:
             print ('Error: 再次运行后,重新输入正确的选项代号')
             time.sleep(2)
             exit()
+    return(_str_codec_video)
 
 def get_str_raw_bitrate_video_from_keyboard():
     pass
-    _str_input_msg = ' 请输入视频码率，数字即可，单位为 MBits/sec 默认 80MBits/sec : '
+    _str_input_msg = '请输入视频码率，数字即可，单位为 MBits/sec 默认 80MBits/sec : '
     _str_raw_input = str(input(_str_input_msg))
     return(_str_raw_input)
 
@@ -119,6 +119,54 @@ def check_and_rebuild_str_bitrate_video(_str_input):
     else:
         _str_bitrate = '%sM' % _str_input
     return(_str_bitrate)
+
+def get_bool_audio_delay_from_keyboard():
+    print('是否设定音频延迟:')
+    _str_input_msg = ' 1[是]? 0[否]? 直接回车则默认为 0[否]:'
+    _str_input = str(input(_str_input_msg))
+    _dict_bool_input = {'0':False,'1':True}
+    try:
+        pass
+        if len(_str_input) == 0:
+            pass
+            _bool_deal = False
+        else:
+            _bool_deal = _dict_bool_input[_str_input]
+    except Exception as e:
+            print ('Error: 再次运行后,重新输入正确的选项代号')
+            time.sleep(2)
+            exit()
+    return(_bool_deal)
+
+def get_str_raw_audio_delay_time_ms_from_keyboard():
+    _str_input_msg = ' 请输入延迟时长，数字即可，单位为 ms 默认 1500(ms) : '
+    _str_raw_input = str(input(_str_input_msg))
+    return(_str_raw_input)
+
+def check_and_rebuild_str_audio_delay_time_ms(_str_input):
+    if len(_str_input) is 0:
+        _str_time_ms = '1500'
+    else:
+        try:
+            _str_time_ms = str(int(_str_input))
+        except Exception as e:
+            print ('Error: 再次运行后,重新输入正确数值')
+            time.sleep(2)
+            exit()
+    return(_str_time_ms)
+
+def set_audio_delay_time_ms_for_nocopy_from_list_for_cmd_array(
+        _list_cmd_array,_str_audio_delay_time_ms):
+    _str_value = 'adelay=%s|%s' % (_str_audio_delay_time_ms,
+                                   _str_audio_delay_time_ms)
+    for _index in list(range(len(_list_cmd_array))):
+        if ('-ac' in _list_cmd_array[_index]):
+            _cmd_array = _list_cmd_array[_index]
+            _list_cmd_array[_index].insert(_cmd_array.index('-ac'),'-af')
+            _list_cmd_array[_index].insert(_cmd_array.index('-ac'),_str_value)
+        else:
+            pass
+    return(_list_cmd_array)
 
 def get_str_cut_list_file_name_from_keyboard():
     pass
@@ -149,11 +197,11 @@ def get_bool_overwrite_output_from_keyboard():
             _bool_deal = False
         else:
             _bool_deal = _dict_bool_input[_str_input]
-        return(_bool_deal)
     except Exception as e:
             print ('Error: 再次运行后,重新输入正确的选项代号')
             time.sleep(2)
             exit()
+    return(_bool_deal)
 
 def get_bool_make_2d_l_from_top_from_keyboard():
     pass
@@ -168,11 +216,11 @@ def get_bool_make_2d_l_from_top_from_keyboard():
             _bool_make_2d_l_from_top = False
         else:
             _bool_make_2d_l_from_top = _dict_make2dl_from_top[_str_input]
-        return(_bool_make_2d_l_from_top)
     except Exception as e:
             print ('Error: 再次运行后,重新输入正确的选项代号')
             time.sleep(2)
             exit()
+    return(_bool_make_2d_l_from_top)
 
 def get_str_bitrate_make_2d_l_from_top_from_keyboard():
     pass
@@ -241,11 +289,11 @@ def get_bool_double_action_for_3d_2d_from_keyboard():
             _bool_double_action_3d2d = False
         else:
             _bool_double_action_3d2d = _dict_map_bool[_str_input]
-        return(_bool_double_action_3d2d)
     except Exception as e:
             print ('Error: 再次运行后,重新输入正确的选项代号')
             time.sleep(2)
             exit()
+    return(_bool_double_action_3d2d)
 
 def rebuild_str_timestamp_input(_str_input):
     pass
@@ -464,9 +512,15 @@ def main(_dev_mode):
         bool_video_deinterlace = rebuild_bool_deinterlace(_tmp_deinterlace)
         _src_bitrate_input = get_str_raw_bitrate_video_from_keyboard()
         str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
+        _bool_audio_delay = get_bool_audio_delay_from_keyboard()
+        if _bool_audio_delay is True:
+            _input_delay_time = get_str_raw_audio_delay_time_ms_from_keyboard()
+            _str_audio_delay_time_ms = check_and_rebuild_str_audio_delay_time_ms(_input_delay_time)
+        else:
+            pass
     str_cut_list_file_name = get_str_cut_list_file_name_from_keyboard()
     if str_cut_list_file_name == None:
-        pass
+        pass # No cut list
         _bool_overwrite_output = False
         str_start_timestamp = get_str_start_timestamp_from_keyboard()
         str_end_stimestamp = get_str_end_timestamp_from_keyboard()
@@ -477,6 +531,7 @@ def main(_dev_mode):
                                                      _src_video_path,
                                                      _src_video_file_name)
         if str_codec_video != 'copy':
+            # noCopy
             _bool_3dt2dl = get_bool_make_2d_l_from_top_from_keyboard()
             if _bool_3dt2dl:
                 pass
@@ -486,7 +541,7 @@ def main(_dev_mode):
                 pass
                 _str_bitrate_3dt2dl,_bool_double_3dt2dl = None,False
         else:
-            pass
+            pass # Copy
             _bool_3dt2dl,_bool_double_3dt2dl = False,False
             _str_bitrate_3dt2dl = None
         _list_for_cmd_array = make_list_for_cmd_array(_src_video_name_input,
@@ -500,7 +555,12 @@ def main(_dev_mode):
                                                       _str_bitrate_3dt2dl,
                                                       _bool_double_3dt2dl,
                                                       _bool_overwrite_output)
+        if _bool_audio_delay is True:
+            _list_for_cmd_array = set_audio_delay_time_ms_for_nocopy_from_list_for_cmd_array(_list_for_cmd_array,_str_audio_delay_time_ms)
+        else:
+            pass
         for _cmd_array in _list_for_cmd_array:
+            # exec mission list
             if _dev_mode is True:
                 print(_cmd_array)
                 continue
@@ -509,9 +569,10 @@ def main(_dev_mode):
                 subprocess.call(_cmd_array)
         pass
     else:
-        pass
+        pass # Have cut list
         _bool_overwrite_output = get_bool_overwrite_output_from_keyboard()
         if str_codec_video != 'copy':
+            # noCopy
             _bool_3dt2dl = get_bool_make_2d_l_from_top_from_keyboard()
             if _bool_3dt2dl:
                 pass
@@ -521,7 +582,7 @@ def main(_dev_mode):
                 pass
                 _str_bitrate_3dt2dl,_bool_double_3dt2dl = None,False
         else:
-            pass
+            pass # Copy
             _bool_3dt2dl,_bool_double_3dt2dl = False,False
             _str_bitrate_3dt2dl = None
         with open(str_cut_list_file_name, 'r') as _raw_cut_list_file:
@@ -546,7 +607,12 @@ def main(_dev_mode):
                                                               _str_bitrate_3dt2dl,
                                                               _bool_double_3dt2dl,
                                                               _bool_overwrite_output)
+                if _bool_audio_delay is True:
+                    _list_for_cmd_array = set_audio_delay_time_ms_for_nocopy_from_list_for_cmd_array(_list_for_cmd_array,_str_audio_delay_time_ms)
+                else:
+                    pass
                 for _cmd_array in _list_for_cmd_array:
+                    # exec mission list
                     if _dev_mode is True:
                         print(_cmd_array)
                         continue
