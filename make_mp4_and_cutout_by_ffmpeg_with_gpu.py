@@ -197,11 +197,11 @@ def get_bool_overwrite_output_from_keyboard():
             _bool_deal = False
         else:
             _bool_deal = _dict_bool_input[_str_input]
-        return(_bool_deal)
     except Exception as e:
             print ('Error: 再次运行后,重新输入正确的选项代号')
             time.sleep(2)
             exit()
+    return(_bool_deal)
 
 def get_bool_make_2d_l_from_top_from_keyboard():
     pass
