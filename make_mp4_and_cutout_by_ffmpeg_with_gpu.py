@@ -514,7 +514,7 @@ def main(_dev_mode):
         str_bitrate = check_and_rebuild_str_bitrate_video(_src_bitrate_input)
     str_cut_list_file_name = get_str_cut_list_file_name_from_keyboard()
     if str_cut_list_file_name == None:
-        pass
+        pass # No cut list
         _bool_overwrite_output = False
         str_start_timestamp = get_str_start_timestamp_from_keyboard()
         str_end_stimestamp = get_str_end_timestamp_from_keyboard()
@@ -525,6 +525,7 @@ def main(_dev_mode):
                                                      _src_video_path,
                                                      _src_video_file_name)
         if str_codec_video != 'copy':
+            # noCopy
             _bool_3dt2dl = get_bool_make_2d_l_from_top_from_keyboard()
             if _bool_3dt2dl:
                 pass
@@ -534,7 +535,7 @@ def main(_dev_mode):
                 pass
                 _str_bitrate_3dt2dl,_bool_double_3dt2dl = None,False
         else:
-            pass
+            pass # Copy
             _bool_3dt2dl,_bool_double_3dt2dl = False,False
             _str_bitrate_3dt2dl = None
         _list_for_cmd_array = make_list_for_cmd_array(_src_video_name_input,
@@ -549,6 +550,7 @@ def main(_dev_mode):
                                                       _bool_double_3dt2dl,
                                                       _bool_overwrite_output)
         for _cmd_array in _list_for_cmd_array:
+            # exec mission list
             if _dev_mode is True:
                 print(_cmd_array)
                 continue
@@ -557,9 +559,10 @@ def main(_dev_mode):
                 subprocess.call(_cmd_array)
         pass
     else:
-        pass
+        pass # Have cut list
         _bool_overwrite_output = get_bool_overwrite_output_from_keyboard()
         if str_codec_video != 'copy':
+            # noCopy
             _bool_3dt2dl = get_bool_make_2d_l_from_top_from_keyboard()
             if _bool_3dt2dl:
                 pass
@@ -569,7 +572,7 @@ def main(_dev_mode):
                 pass
                 _str_bitrate_3dt2dl,_bool_double_3dt2dl = None,False
         else:
-            pass
+            pass # Copy
             _bool_3dt2dl,_bool_double_3dt2dl = False,False
             _str_bitrate_3dt2dl = None
         with open(str_cut_list_file_name, 'r') as _raw_cut_list_file:
@@ -595,6 +598,7 @@ def main(_dev_mode):
                                                               _bool_double_3dt2dl,
                                                               _bool_overwrite_output)
                 for _cmd_array in _list_for_cmd_array:
+                    # exec mission list
                     if _dev_mode is True:
                         print(_cmd_array)
                         continue
