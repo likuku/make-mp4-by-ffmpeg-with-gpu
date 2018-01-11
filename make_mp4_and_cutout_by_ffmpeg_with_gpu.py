@@ -289,11 +289,11 @@ def get_bool_double_action_for_3d_2d_from_keyboard():
             _bool_double_action_3d2d = False
         else:
             _bool_double_action_3d2d = _dict_map_bool[_str_input]
-        return(_bool_double_action_3d2d)
     except Exception as e:
             print ('Error: 再次运行后,重新输入正确的选项代号')
             time.sleep(2)
             exit()
+    return(_bool_double_action_3d2d)
 
 def rebuild_str_timestamp_input(_str_input):
     pass
